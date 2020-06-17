@@ -1,11 +1,15 @@
 package com.bridgelabz.addressbook;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class AdressBook {
     public static void main(String[] args) {
         System.out.println("\tWelcome to Adress Book");
-
-        PersonDetails personDetails = new PersonDetails("Nikhil", "Dhruwe", "lingampally", "Telangana", "Hyderabad", 500032, "9988776655");
-        personDetails.print();
+        ArrayList<PersonDetails> list = new ArrayList<>();
+        PersonDetails person = new PersonDetails("Nikhil","Dhruwe","lingampally","Hyderabad","Telangana",500032,"789654123");
+        person.addPerson();
+        //System.out.println(list);
+        person.print();
 
     }
 }
