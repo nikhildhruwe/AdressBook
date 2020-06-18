@@ -2,7 +2,7 @@
 package com.bridgelabz.addressbook;
 import java.util.Scanner;
 public class PersonDetails {
-
+//Class Vairables
     String firstName;
     String lastName;
     String address;
@@ -12,7 +12,7 @@ public class PersonDetails {
     String phone;
     String name;
 
-
+//Constructor to initialize.
     public PersonDetails( String firstName,String lastName ,String address, String city,String state,int zip,String phone)
     {
         this.firstName=firstName;
@@ -23,7 +23,7 @@ public class PersonDetails {
         this.zip=zip;
         this.phone=phone;
     }
-
+//Getter and Setter methods.
     public String getFirstName() {
         return firstName;
     }
@@ -84,6 +84,7 @@ public class PersonDetails {
         String compareFirstName = ((PersonDetails) comparefname).getFirstName();
         return this.firstName;
     }
+
     public String toString() {
         return "NAME: "+firstName+" "+lastName+"  "+"ADDRESS: "+address+"  "+"CITY: "+city+"  "+"STATE: "+state+"  "+"ZIPCODE: "+zip+"  "+"PHONE: "+phone;
 

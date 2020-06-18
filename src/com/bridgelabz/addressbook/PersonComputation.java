@@ -6,6 +6,7 @@ import java.util.*;
 public class PersonComputation {
 
     private ArrayList<PersonDetails> personList=new ArrayList<PersonDetails>();
+  //Adding new Person List.
     public  void addPerson()
     {
         Scanner scan=new Scanner(System.in);
@@ -48,6 +49,7 @@ public class PersonComputation {
 
 
     }
+    //Deleting person record
     public  void deletePerson()
     {
         Scanner scan=new Scanner(System.in);
@@ -76,6 +78,7 @@ public class PersonComputation {
         }
 
     }
+    //Editing person record except their name
     public void editPerson(){
         Scanner scan=new Scanner(System.in);
         boolean check=true;
@@ -121,7 +124,7 @@ public class PersonComputation {
             System.out.println("Record does not exist");
         }
     }
-
+//Sorting list by name
     public void sortByName(){
         Collections.sort(personList, new Comparator<PersonDetails>() {
             @Override
@@ -130,6 +133,7 @@ public class PersonComputation {
             }
         });
     }
+    //Sorting list by City,Zip Or state.
    public void sortByCityStateZip(){
         Scanner scan=new Scanner(System.in);
 
@@ -167,6 +171,7 @@ public class PersonComputation {
 
        }
    }
+   //View person available by giving state and city name.
     public void viewPersonCityState(){
         Scanner scan=new Scanner(System.in);
         System.out.println("Enter State");
@@ -191,6 +196,36 @@ public class PersonComputation {
         {
             System.out.println("Record does not exist");
         }
+    }
+    //view person in partivular city or state.
+    public void cityOrState(){
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Enter State");
+        String state=scan.nextLine();
+        System.out.println("Enter City");
+        String city=scan.nextLine();
+        boolean check=true;
+        for ( PersonDetails personDetails : personList)
+        {
+            if( personDetails.state.equals(state) )
+            {
+                check = false;
+                System.out.println("Person: " + personDetails.firstName + " " + personDetails.lastName+" State :"+personDetails.state);
+            }
+            if (personDetails.city.equals(city))
+            {
+
+                    check=false;
+                    System.out.println("Person: "+personDetails.firstName+" "+personDetails.lastName+" City :"+personDetails.city);
+
+            }
+        }
+
+        if(check == true)
+        {
+            System.out.println("Record does not exist");
+        }
+
     }
     public  void print()
     {
