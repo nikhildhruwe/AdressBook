@@ -137,7 +137,7 @@ public class PersonComputation {
         Scanner scan=new Scanner(System.in);
 
 
-       System.out.println("choose:\n 1:City\n2:State\n3:Zip");
+       System.out.println("choose:\n1:City\n2:State\n3:Zip");
        int Choice = scan.nextInt();
        switch (Choice)
        {
@@ -159,7 +159,7 @@ public class PersonComputation {
                break;
            case 3: Collections.sort(personList, new Comparator<PersonDetails>() {
                @Override
-               public int compare(PersonDetails o1, PersonDetails o2) {
+               public int compare(PersonDetails o1 , PersonDetails o2) {
                    return Integer.valueOf(o1.getZip()).compareTo(o2.getZip());
                }
                 });
