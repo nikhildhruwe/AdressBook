@@ -133,6 +133,43 @@ public class PersonComputation {
             }
         });
     }
+   public void sortByCityStateZip(){
+        Scanner scan=new Scanner(System.in);
+
+
+       System.out.println("choose:\n 1:City\n2:State\n3:Zip");
+       int Choice = scan.nextInt();
+       switch (Choice)
+       {
+           case 1: Collections.sort(personList, new Comparator<PersonDetails>() {
+               @Override
+               public int compare(PersonDetails o1, PersonDetails o2) {
+                   return o1.getCity().compareTo(o2.getCity());
+               }
+           });
+           print();
+               break;
+           case 2: Collections.sort(personList, new Comparator<PersonDetails>() {
+               @Override
+               public int compare(PersonDetails o1, PersonDetails o2) {
+                   return o1.getState().compareTo(o2.getState());
+               }
+                 });
+           print();
+               break;
+           case 3: Collections.sort(personList, new Comparator<PersonDetails>() {
+               @Override
+               public int compare(PersonDetails o1, PersonDetails o2) {
+                   return Integer.valueOf(o1.getZip()).compareTo(o2.getZip());
+               }
+                });
+           print();
+               break;
+           default:
+               System.out.println("Ivalid option");
+
+       }
+   }
     public  void print()
     {
         System.out.println("ADDRESS BOOK DETAILS : ");
