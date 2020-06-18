@@ -80,5 +80,12 @@ public class PersonDetails {
         this.phone = phone;
     }
 
+    public String compareTo(PersonDetails comparefname) {
+        String compareFirstName = ((PersonDetails) comparefname).getFirstName();
+        return this.firstName;
+    }
+    public String toString() {
+        return "NAME: "+firstName+" "+lastName+"  "+"ADDRESS: "+address+"  "+"CITY: "+city+"  "+"STATE: "+state+"  "+"ZIPCODE: "+zip+"  "+"PHONE: "+phone;
 
+    }
 }

@@ -11,7 +11,7 @@ public class AdressBook {
         boolean status=true;
         while(status==true)
         {
-            System.out.println("Select : \n 1: Add Person details \n2: Delete \n3: Display \n4: Edit \n5: Exit");
+            System.out.println("Select : \n 1: Add Person details \n2: Delete \n3: Display \n4: Edit \n5: Sort by Name \n6: Exit");
             int num=scan.nextInt();
             switch (num)
             {
@@ -23,7 +23,9 @@ public class AdressBook {
                     break;
                 case 4 : personComputation.editPerson();
                     break;
-                case 5 :status=false;
+                case 5 : personComputation.sortByName();
+                break;
+                case 6 :status=false;
                     break;
                 default:
                     System.out.println("Invalid choise");

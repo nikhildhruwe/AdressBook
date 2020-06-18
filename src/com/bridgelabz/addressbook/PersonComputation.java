@@ -2,6 +2,8 @@ package com.bridgelabz.addressbook;
 
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class PersonComputation {
@@ -122,13 +124,21 @@ public class PersonComputation {
             System.out.println("Record does not exist");
         }
     }
+
+    public void sortByName(){
+        Collections.sort(personList, new Comparator<PersonDetails>() {
+            @Override
+            public int compare(PersonDetails o1, PersonDetails o2) {
+                return o1.getFirstName().compareTo(o2.getFirstName());
+            }
+        });
+    }
     public  void print()
     {
         System.out.println("ADDRESS BOOK DETAILS : ");
         for ( PersonDetails details : personList)
         {
-            System.out.println("NAME: "+details.firstName+" "+details.lastName+"  "+"ADDRESS: "+details.address+"  "+"CITY: "+details.city+"  "+"STATE: "+details.state+"  "+"ZIPCODE: "+details.zip+"  "+"PHONE NO.: "+details.phone);
-
+            System.out.println(details);
         }
 
     }
