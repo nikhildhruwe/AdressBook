@@ -1,10 +1,7 @@
 package com.bridgelabz.addressbook;
 
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.*;
 
 public class PersonComputation {
 
@@ -137,7 +134,7 @@ public class PersonComputation {
         Scanner scan=new Scanner(System.in);
 
 
-       System.out.println("choose:\n1:City\n2:State\n3:Zip");
+       System.out.println("choose:\n1:City\n2:S tate\n3:Zip");
        int Choice = scan.nextInt();
        switch (Choice)
        {
@@ -170,6 +167,31 @@ public class PersonComputation {
 
        }
    }
+    public void viewPersonCityState(){
+        Scanner scan=new Scanner(System.in);
+        System.out.println("Enter State");
+        String state=scan.nextLine();
+        System.out.println("Enter City");
+        String city=scan.nextLine();
+        boolean check=true;
+        for ( PersonDetails personDetails : personList)
+        {
+            if( personDetails.state.equals(state) )
+            {
+                if(personDetails.city.equals(city))
+                {
+                    check=false;
+                    System.out.println("Person:"+personDetails.firstName+" "+personDetails.lastName);
+                    break;
+                }
+            }
+        }
+
+        if(check == true)
+        {
+            System.out.println("Record does not exist");
+        }
+    }
     public  void print()
     {
         System.out.println("ADDRESS BOOK DETAILS : ");
