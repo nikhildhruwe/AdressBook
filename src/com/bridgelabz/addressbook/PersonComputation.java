@@ -15,8 +15,20 @@ public class PersonComputation {
         System.out.print("\nEnter first name: ");
         String firstName = scan.nextLine();
 
+
         System.out.print("Enter last name: ");
         String lastName = scan.nextLine();
+        for ( PersonDetails personDetails : personList)
+        {
+            if( personDetails.firstName.equals(firstName) )
+            {
+                if(personDetails.lastName.equals(lastName))
+                {
+                    System.out.println("Person with this name already exists");
+                    return;
+                }
+            }
+        }
 
         System.out.print("Enter Address: ");
         String address=scan.nextLine();
@@ -34,6 +46,8 @@ public class PersonComputation {
         String phone=scan.next();
         PersonDetails personDetails=new PersonDetails(firstName,lastName,address,city,state,zip,phone);
         personList.add(personDetails);
+
+
     }
     public  void deletePerson()
     {
@@ -81,20 +95,23 @@ public class PersonComputation {
 
                     System.out.print("Enter Address: ");
                     String address=scan.nextLine();
+                    personDetails.setAddress(address);
 
                     System.out.print("Enter City: ");
                     String city=scan.nextLine();
+                    personDetails.setCity(city);
 
                     System.out.print("Enter State: ");
                     String state=scan.nextLine();
+                    personDetails.setState(state);
 
                     System.out.print("Enter Zip: ");
                     int zip=scan.nextInt();
+                    personDetails.setZip(zip);
 
                     System.out.print("Enter Phone Number: ");
                     String phone=scan.next();
-                    PersonDetails personDetails1=new PersonDetails(firstName,lastName,address,city,state,zip,phone);
-                    personList.add(personDetails1);
+                    personDetails.setPhone(phone);
                     break;
                 }
             }
