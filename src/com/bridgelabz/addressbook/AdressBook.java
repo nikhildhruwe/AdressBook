@@ -6,6 +6,7 @@ public class AdressBook {
     public static void main(String[] args) {
         System.out.println("\tWelcome to Adress Book");
         AdressBook adressBook=new AdressBook();
+        PersonComputation personComputation=new PersonComputation();
         Scanner scan = new Scanner(System.in);
         boolean status=true;
         while(status==true)
@@ -14,11 +15,11 @@ public class AdressBook {
             int num=scan.nextInt();
             switch (num)
             {
-                case 1 : PersonComputation.addPerson();
+                case 1 : personComputation.addPerson();
                     break;
-                case 2: PersonComputation.deletePerson();
+                case 2: personComputation.deletePerson();
                     break;
-                case 3 : PersonComputation.print();
+                case 3 : personComputation.print();
                     break;
                 case 4 :status=false;
                     break;

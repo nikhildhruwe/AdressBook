@@ -6,10 +6,9 @@ import java.util.Scanner;
 
 public class PersonComputation {
 
-
-    public static void addPerson()
+    private ArrayList<PersonDetails> personList=new ArrayList<PersonDetails>();
+    public  void addPerson()
     {
-        ArrayList<PersonDetails> personDetails=new ArrayList<PersonDetails>();
         Scanner scan=new Scanner(System.in);
         System.out.println("\nTo add person");
 
@@ -33,22 +32,46 @@ public class PersonComputation {
 
         System.out.print("Enter Phone Number: ");
         String phone=scan.next();
-        //list.add(this.addPerson());
-        personDetails.add(new PersonDetails(firstName,lastName,address,city,state,zip,phone));
+        PersonDetails personDetails=new PersonDetails(firstName,lastName,address,city,state,zip,phone);
+        personList.add(personDetails);
     }
-    public static void deletePerson()
+    public  void deletePerson()
     {
-        ArrayList<PersonDetails> personDetails=new ArrayList<PersonDetails>();
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter Name");
-        String name=scan.next();
-        personDetails.remove(name);
+        Scanner scan=new Scanner(System.in);
+        boolean check=true;
+
+        System.out.println("Enter your First name");
+        String firstName = scan.next();
+        System.out.println("Enter your Last name");
+        String lastName = scan.next();
+        for ( PersonDetails personDetails : personList)
+        {
+            if( personDetails.firstName.equals(firstName) )
+            {
+                if(personDetails.lastName.equals(lastName))
+                {
+                    check=false;
+                    personList.remove(personDetails);
+                    break;
+                    }
+                }
+            }
+
+        if(check == true)
+        {
+            System.out.println("Record does not exist");
+        }
+
+
     }
-    public static void print()
+    public  void print()
     {
-        ArrayList<PersonDetails> personDetails=new ArrayList<PersonDetails>();
-        System.out.println("Person Details : \n");
-        System.out.println(personDetails);
+        System.out.println("ADDRESS BOOK DETAILS : ");
+        for ( PersonDetails details : personList)
+        {
+            System.out.println("NAME: "+details.firstName+" "+details.lastName+"  "+"ADDRESS: "+details.address+"  "+"CITY: "+details.city+"  "+"STATE: "+details.state+"  "+"ZIPCODE: "+details.zip+"  "+"PHONE NO.: "+details.phone);
+
+        }
 
     }
 }
