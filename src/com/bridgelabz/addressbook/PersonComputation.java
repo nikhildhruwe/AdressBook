@@ -181,7 +181,7 @@ public class PersonComputation {
                 if(personDetails.city.equals(city))
                 {
                     check=false;
-                    System.out.println("Person:"+personDetails.firstName+" "+personDetails.lastName);
+                    System.out.println("Person: "+personDetails.firstName+" "+personDetails.lastName);
                     break;
                 }
             }
