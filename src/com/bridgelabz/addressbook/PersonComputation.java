@@ -2,11 +2,9 @@ package com.bridgelabz.addressbook;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Scanner;
 
-public class PersonComputation<check> {
-
+public class PersonComputation {
     private ArrayList<PersonDetails> personList = new ArrayList<PersonDetails>();
 
     //******Adding new Person List.*****//
@@ -64,7 +62,7 @@ public class PersonComputation<check> {
                 }
             }
         }
-        if (check == true) {
+        if (check) {
             System.out.println("Record does not exist");
         }
     }
@@ -98,7 +96,6 @@ public class PersonComputation<check> {
                     System.out.print("Enter Zip: ");
                     int zip = scan.nextInt();
                     personDetails.setZip(zip);
-
                     System.out.print("Enter Phone Number: ");
                     String phone = scan.next();
                     personDetails.setPhone(phone);
@@ -110,6 +107,7 @@ public class PersonComputation<check> {
             System.out.println("Record does not exist");
         }
     }
+
     //Sorting list by name
     public void sortByName() {
         Collections.sort(personList, (o1, o2) ->
@@ -119,8 +117,6 @@ public class PersonComputation<check> {
     //Sorting list by City,Zip Or state.
     public void sortByCityStateZip() {
         Scanner scan = new Scanner(System.in);
-
-
         System.out.println("choose:\n1:City\n2:S tate\n3:Zip");
         int Choice = scan.nextInt();
         switch (Choice) {
@@ -137,8 +133,7 @@ public class PersonComputation<check> {
                 print();
                 break;
             default:
-                System.out.println("Ivalid option");
-
+                System.out.println("Invalid option");
         }
     }
 
@@ -158,11 +153,10 @@ public class PersonComputation<check> {
                 break;
             }
         }
-        if(check == true)
-        {
-        System.out.println("Record does not exist");
+        if (check == true) {
+            System.out.println("Record does not exist");
+        }
     }
-}
 
     //******View person in particular city or state.******//
     public void cityOrState() {
@@ -179,18 +173,14 @@ public class PersonComputation<check> {
                         " State :" + personDetails.getState());
             }
             if (personDetails.getCity().equals(city)) {
-
                 check = false;
                 System.out.println("Person: " + personDetails.getFirstName() +
                         " " + personDetails.getLastName() + " City :" + personDetails.getCity());
-
             }
         }
-
         if (check == true) {
             System.out.println("Record does not exist");
         }
-
     }
 
     public void print() {
@@ -198,6 +188,5 @@ public class PersonComputation<check> {
         for (PersonDetails details : personList) {
             System.out.println(details);
         }
-
     }
 }
