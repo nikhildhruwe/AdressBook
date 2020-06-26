@@ -1,29 +1,26 @@
 
 package com.bridgelabz.addressbook;
-import java.util.Scanner;
-public class PersonDetails {
-//Class Vairables
-    String firstName;
-    String lastName;
-    String address;
-    String city;
-    String state;
-    int zip;
-    String phone;
-    String name;
 
-//Constructor to initialize.
-    public PersonDetails( String firstName,String lastName ,String address, String city,String state,int zip,String phone)
-    {
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.address=address;
-        this.city=city;
-        this.state=state;
-        this.zip=zip;
-        this.phone=phone;
+public class PersonDetails {
+   private String firstName;
+    private String lastName;
+    private String address;
+    private String city;
+    private String state;
+    private int zip;
+    private String phone;
+
+    public PersonDetails(String firstName, String lastName, String address, String city, String state, int zip, String phone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.phone = phone;
     }
-//Getter and Setter methods.
+
+    //Getter and Setter methods.
     public String getFirstName() {
         return firstName;
     }
@@ -80,13 +77,9 @@ public class PersonDetails {
         this.phone = phone;
     }
 
-    public String compareTo(PersonDetails comparefname) {
-        String compareFirstName = ((PersonDetails) comparefname).getFirstName();
-        return this.firstName;
-    }
 
     public String toString() {
-        return "NAME: "+firstName+" "+lastName+"  "+"ADDRESS: "+address+"  "+"CITY: "+city+"  "+"STATE: "+state+"  "+"ZIPCODE: "+zip+"  "+"PHONE: "+phone;
+        return "NAME: " + firstName + " " + lastName + "  " + "ADDRESS: " + address + "  " + "CITY: " + city + "  " + "STATE: " + state + "  " + "ZIPCODE: " + zip + "  " + "PHONE: " + phone;
 
     }
 }
