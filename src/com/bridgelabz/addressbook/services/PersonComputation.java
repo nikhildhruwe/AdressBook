@@ -119,15 +119,15 @@ public class PersonComputation implements AddressBookInterface {
         int Choice = scan.nextInt();
         switch (Choice) {
             case 1:
-                Collections.sort(personList, Comparator.comparing(PersonDetails::getCity));
+                personList.sort(Comparator.comparing(PersonDetails::getCity));
                 print();
                 break;
             case 2:
-                Collections.sort(personList, Comparator.comparing(PersonDetails::getState));
+                personList.sort(Comparator.comparing(PersonDetails::getState));
                 print();
                 break;
             case 3:
-                Collections.sort(personList, Comparator.comparingInt(PersonDetails::getZip));
+                personList.sort(Comparator.comparingInt(PersonDetails::getZip));
                 print();
                 break;
             default:
@@ -181,7 +181,7 @@ public class PersonComputation implements AddressBookInterface {
             System.out.println("Record does not exist");
         }
     }
-
+    //Print the contents of address book
     public void print() {
         System.out.println("ADDRESS BOOK DETAILS : ");
         personList.forEach(details -> System.out.println(details));
@@ -190,6 +190,6 @@ public class PersonComputation implements AddressBookInterface {
     @Override
     public boolean equals(Object name) {
         return personList.stream().anyMatch(personName -> (personName.getFirstName() + " "
-                + personName.getLastName()).equals(name));
+                + personName.getLastName()).equalsIgnoreCase((String) name));
     }
 }
