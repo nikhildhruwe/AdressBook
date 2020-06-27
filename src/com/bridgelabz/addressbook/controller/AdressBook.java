@@ -1,6 +1,6 @@
-package com.bridgelabz.addressbook.services;
+package com.bridgelabz.addressbook.controller;
 
-import com.bridgelabz.addressbook.utility.PersonComputation;
+import com.bridgelabz.addressbook.services.PersonComputation;
 
 import java.util.Scanner;
 

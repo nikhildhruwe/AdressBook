@@ -1,12 +1,13 @@
-package com.bridgelabz.addressbook.utility;
+package com.bridgelabz.addressbook.services;
 
 import com.bridgelabz.addressbook.model.PersonDetails;
+import com.bridgelabz.addressbook.services.AddressBookInterface;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class PersonComputation{
+public class PersonComputation implements AddressBookInterface {
     private ArrayList<PersonDetails> personList = new ArrayList<PersonDetails>();
 
     //******Adding new Person List.*****//
@@ -147,18 +148,18 @@ public class PersonComputation{
         String city = scan.nextLine();
         boolean check = true;
         for (PersonDetails personDetails : personList) {
-            // if (personDetails.state.equals(state)) {
-            if (personDetails.getCity().equals(city)) {
-                check = false;
-                System.out.println("Person: " + personDetails.getFirstName() + " " + personDetails.getLastName());
-                break;
+            if (personDetails.getState().equals(state)) {
+                if (personDetails.getCity().equals(city)) {
+                    check = false;
+                    System.out.println("Person: " + personDetails.getFirstName() + " " + personDetails.getLastName());
+                    break;
+                }
+            }
+            if (check) {
+                System.out.println("Record does not exist");
             }
         }
-        if (check) {
-            System.out.println("Record does not exist");
-        }
     }
-
     //******View person in particular city or state.******//
     public void cityOrState() {
         Scanner scan = new Scanner(System.in);
@@ -179,13 +180,13 @@ public class PersonComputation{
                         " " + personDetails.getLastName() + " City :" + personDetails.getCity());
             }
         }
-        if (check == true) {
+        if (check) {
             System.out.println("Record does not exist");
         }
     }
 
     public void print() {
         System.out.println("ADDRESS BOOK DETAILS : ");
-        personList.forEach( details -> System.out.println(details));
-        }
+        personList.forEach(details -> System.out.println(details));
+    }
 }
