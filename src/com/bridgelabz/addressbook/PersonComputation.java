@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class PersonComputation {
+public class PersonComputation{
     private ArrayList<PersonDetails> personList = new ArrayList<PersonDetails>();
 
     //******Adding new Person List.*****//
@@ -25,7 +25,6 @@ public class PersonComputation {
                 }
             }
         }
-
         System.out.print("Enter Address: ");
         String address = scan.nextLine();
 
@@ -103,7 +102,7 @@ public class PersonComputation {
                 }
             }
         }
-        if (check == true) {
+        if (check) {
             System.out.println("Record does not exist");
         }
     }
@@ -117,7 +116,7 @@ public class PersonComputation {
     //Sorting list by City,Zip Or state.
     public void sortByCityStateZip() {
         Scanner scan = new Scanner(System.in);
-        System.out.println("choose:\n1:City\n2:S tate\n3:Zip");
+        System.out.println("choose:\n1:City\n2:State\n3:Zip");
         int Choice = scan.nextInt();
         switch (Choice) {
             case 1:
@@ -153,7 +152,7 @@ public class PersonComputation {
                 break;
             }
         }
-        if (check == true) {
+        if (check) {
             System.out.println("Record does not exist");
         }
     }
