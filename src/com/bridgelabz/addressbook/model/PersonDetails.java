@@ -1,5 +1,5 @@
 
-package com.bridgelabz.addressbook;
+package com.bridgelabz.addressbook.model;
 
 public class PersonDetails {
     private String firstName;

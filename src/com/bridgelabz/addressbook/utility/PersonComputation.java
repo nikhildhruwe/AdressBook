@@ -1,4 +1,6 @@
-package com.bridgelabz.addressbook;
+package com.bridgelabz.addressbook.utility;
+
+import com.bridgelabz.addressbook.model.PersonDetails;
 
 import java.util.ArrayList;
 import java.util.Collections;
