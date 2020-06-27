@@ -1,14 +1,14 @@
 package com.bridgelabz.addressbook.services;
 
 import com.bridgelabz.addressbook.model.PersonDetails;
-import com.bridgelabz.addressbook.services.AddressBookInterface;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class PersonComputation implements AddressBookInterface {
-    private ArrayList<PersonDetails> personList = new ArrayList<PersonDetails>();
+    private ArrayList<PersonDetails> personList = new ArrayList<>();
 
     //******Adding new Person List.*****//
     public void addPerson() {
@@ -20,30 +20,26 @@ public class PersonComputation implements AddressBookInterface {
 
         System.out.print("Enter last name: ");
         String lastName = scan.nextLine();
-        for (PersonDetails personDetails : personList) {
-            if (personDetails.getFirstName().equals(firstName)) {
-                if (personDetails.getLastName().equals(lastName)) {
-                    System.out.println("Person with this name already exists");
-                    return;
-                }
-            }
+        if (!equals(firstName + " " + lastName)) {
+            System.out.print("Enter Address: ");
+            String address = scan.nextLine();
+
+            System.out.print("Enter City: ");
+            String city = scan.nextLine();
+
+            System.out.print("Enter State: ");
+            String state = scan.nextLine();
+
+            System.out.print("Enter Zip: ");
+            int zip = scan.nextInt();
+
+            System.out.print("Enter Phone Number: ");
+            String phone = scan.next();
+            PersonDetails personDetails = new PersonDetails(firstName, lastName, address, city, state, zip, phone);
+            personList.add(personDetails);
+        } else {
+            System.out.println("Name already exists");
         }
-        System.out.print("Enter Address: ");
-        String address = scan.nextLine();
-
-        System.out.print("Enter City: ");
-        String city = scan.nextLine();
-
-        System.out.print("Enter State: ");
-        String state = scan.nextLine();
-
-        System.out.print("Enter Zip: ");
-        int zip = scan.nextInt();
-
-        System.out.print("Enter Phone Number: ");
-        String phone = scan.next();
-        PersonDetails personDetails = new PersonDetails(firstName, lastName, address, city, state, zip, phone);
-        personList.add(personDetails);
     }
 
     //******Deleting person record*****//
@@ -98,6 +94,7 @@ public class PersonComputation implements AddressBookInterface {
                     System.out.print("Enter Zip: ");
                     int zip = scan.nextInt();
                     personDetails.setZip(zip);
+
                     System.out.print("Enter Phone Number: ");
                     String phone = scan.next();
                     personDetails.setPhone(phone);
@@ -112,8 +109,7 @@ public class PersonComputation implements AddressBookInterface {
 
     //Sorting list by name
     public void sortByName() {
-        Collections.sort(personList, (o1, o2) ->
-                o1.getFirstName().compareTo(o2.getFirstName()));
+        Collections.sort(personList, Comparator.comparing(PersonDetails::getFirstName));
     }
 
     //Sorting list by City,Zip Or state.
@@ -123,15 +119,15 @@ public class PersonComputation implements AddressBookInterface {
         int Choice = scan.nextInt();
         switch (Choice) {
             case 1:
-                Collections.sort(personList, (o1, o2) -> o1.getCity().compareTo(o2.getCity()));
+                Collections.sort(personList, Comparator.comparing(PersonDetails::getCity));
                 print();
                 break;
             case 2:
-                Collections.sort(personList, (o1, o2) -> o1.getState().compareTo(o2.getState()));
+                Collections.sort(personList, Comparator.comparing(PersonDetails::getState));
                 print();
                 break;
             case 3:
-                Collections.sort(personList, (o1, o2) -> Integer.valueOf(o1.getZip()).compareTo(o2.getZip()));
+                Collections.sort(personList, Comparator.comparingInt(PersonDetails::getZip));
                 print();
                 break;
             default:
@@ -155,11 +151,12 @@ public class PersonComputation implements AddressBookInterface {
                     break;
                 }
             }
-            if (check) {
-                System.out.println("Record does not exist");
-            }
+        }
+        if (check) {
+            System.out.println("Record does not exist");
         }
     }
+
     //******View person in particular city or state.******//
     public void cityOrState() {
         Scanner scan = new Scanner(System.in);
@@ -188,5 +185,11 @@ public class PersonComputation implements AddressBookInterface {
     public void print() {
         System.out.println("ADDRESS BOOK DETAILS : ");
         personList.forEach(details -> System.out.println(details));
+    }
+
+    @Override
+    public boolean equals(Object name) {
+        return personList.stream().anyMatch(personName -> (personName.getFirstName() + " "
+                + personName.getLastName()).equals(name));
     }
 }
