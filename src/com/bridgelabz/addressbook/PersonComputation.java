@@ -185,8 +185,6 @@ public class PersonComputation {
 
     public void print() {
         System.out.println("ADDRESS BOOK DETAILS : ");
-        for (PersonDetails details : personList) {
-            System.out.println(details);
+        personList.forEach( details -> System.out.println(details));
         }
-    }
 }
