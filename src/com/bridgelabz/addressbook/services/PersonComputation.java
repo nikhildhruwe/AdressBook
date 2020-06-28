@@ -1,10 +1,12 @@
 package com.bridgelabz.addressbook.services;
 
 import com.bridgelabz.addressbook.model.PersonDetails;
-import org.w3c.dom.ls.LSOutput;
 
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class PersonComputation implements IAddressBook {
     private final ArrayList<PersonDetails> personList = new ArrayList<>();
@@ -21,7 +23,7 @@ public class PersonComputation implements IAddressBook {
         String lastName = scan.nextLine();
         if (equals(firstName + " " + lastName))
             System.out.println("Name already exists");
-        else{
+        else {
             System.out.print("Enter Address: ");
             String address = scan.nextLine();
 
@@ -44,16 +46,15 @@ public class PersonComputation implements IAddressBook {
     //******Deleting person record*****//
     public void deletePerson() {
         Scanner scan = new Scanner(System.in);
-        boolean check = true;
-
         System.out.println("Enter your First name");
         String firstName = scan.next();
         System.out.println("Enter your Last name");
         String lastName = scan.next();
-        PersonDetails personDetails = personList.stream().filter(name->(name.getFirstName() + " "
+
+        PersonDetails personDetails = personList.stream().filter(name -> (name.getFirstName() + " "
                 + name.getLastName()).equalsIgnoreCase(firstName
                 + " " + lastName)).findAny().orElse(null);
-        if (personDetails!=null)
+        if (personDetails != null)
             personList.remove(personDetails);
         else
             System.out.println("No Records Found.");
@@ -66,33 +67,33 @@ public class PersonComputation implements IAddressBook {
         String firstName = scan.next();
         System.out.println("Enter your Last name");
         String lastName = scan.next();
-        PersonDetails personDetails = personList.stream().filter(name->(name.getFirstName() + " "
+
+        PersonDetails personDetails = personList.stream().filter(name -> (name.getFirstName() + " "
                 + name.getLastName()).equalsIgnoreCase(firstName
                 + " " + lastName)).findAny().orElse(null);
-                if ( personDetails!=null){
-                    System.out.print("Enter Address: ");
-                    String address = scan.nextLine();
-                    personDetails.setAddress(address);
+        if (personDetails != null) {
+            System.out.print("Enter Address: ");
+            String address = scan.nextLine();
+            personDetails.setAddress(address);
 
-                    System.out.print("Enter City: ");
-                    String city = scan.nextLine();
-                    personDetails.setCity(city);
+            System.out.print("Enter City: ");
+            String city = scan.nextLine();
+            personDetails.setCity(city);
 
-                    System.out.print("Enter State: ");
-                    String state = scan.nextLine();
-                    personDetails.setState(state);
+            System.out.print("Enter State: ");
+            String state = scan.nextLine();
+            personDetails.setState(state);
 
-                    System.out.print("Enter Zip: ");
-                    int zip = scan.nextInt();
-                    personDetails.setZip(zip);
+            System.out.print("Enter Zip: ");
+            int zip = scan.nextInt();
+            personDetails.setZip(zip);
 
-                    System.out.print("Enter Phone Number: ");
-                    String phone = scan.next();
-                    personDetails.setPhone(phone);
-                }
-                else
-                System.out.println("Record does not exist");
-        }
+            System.out.print("Enter Phone Number: ");
+            String phone = scan.next();
+            personDetails.setPhone(phone);
+        } else
+            System.out.println("Record does not exist");
+    }
 
     //Sorting list by name
     public void sortByName() {
@@ -129,12 +130,13 @@ public class PersonComputation implements IAddressBook {
         String state = scan.nextLine();
         System.out.println("Enter City");
         String city = scan.nextLine();
-       personList.stream().
-                filter(name->(name.getState().equals(state) && name.getCity().equals(city))).
-                findAny().ifPresentOrElse
-                (personDetails ->System.out.println("Person: " + personDetails.getFirstName() + " "
-                        + personDetails.getLastName()),
-                        ()->System.out.println("No Records Found"));;
+        List<PersonDetails> collect = personList.stream().
+                filter(name -> (name.getState().equals(state) && name.getCity().equals(city))).
+                collect(Collectors.toList());
+        collect.forEach(personDetails -> System.out.println("Person: " + personDetails.getFirstName() + " "
+                + personDetails.getLastName()));
+        if (collect.isEmpty())
+            System.out.println("No Records Found");
     }
 
     //******View person in particular city or state.******//
@@ -144,24 +146,26 @@ public class PersonComputation implements IAddressBook {
         String state = scan.nextLine();
         System.out.println("Enter City");
         String city = scan.nextLine();
-        personList.stream().
-                filter(name -> (name.getState().equals(state))).findAny().
-                ifPresentOrElse(personState -> System.out.println("Person: " + personState.getFirstName() +
-                        " " + personState.getLastName() + " State :" + personState.getState())
-                , ()-> System.out.println("State " + state +" Not Found"));
 
-        personList.stream().
-                filter(name -> (name.getCity().equals(city))).findAny().
-                ifPresentOrElse
-                        (personCity -> System.out.println("Person: " + personCity.getFirstName() +
-                " " + personCity.getLastName() + " City :" + personCity.getCity()),
-                                ()-> System.out.println("City " + city + " not found"));
+        List<PersonDetails> collectState = personList.stream().filter(name -> (name.getState().equals(state))).
+                collect(Collectors.toList());
+        collectState.forEach(personState -> System.out.println("Person: " + personState.getFirstName() +
+                " " + personState.getLastName() + " State :" + personState.getState()));
+        if (collectState.isEmpty())
+            System.out.println("Person With State " + state + " Not Found");
+
+        List<PersonDetails> collectCity = personList.stream().filter(name -> (name.getCity().equals(city))).
+                collect(Collectors.toList());
+        collectCity.forEach(personCity -> System.out.println("Person: " + personCity.getFirstName() +
+                " " + personCity.getLastName() + " City :" + personCity.getCity()));
+        if (collectCity.isEmpty())
+            System.out.println("Person With City " + city + " Not Found");
     }
 
     //Print the contents of address book
     public void print() {
         System.out.println("ADDRESS BOOK DETAILS : ");
-        personList.forEach(details -> System.out.println(details));
+        personList.forEach(System.out::println);
     }
 
     @Override
