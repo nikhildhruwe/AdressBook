@@ -1,6 +1,6 @@
 package com.bridgelabz.addressbook.services;
 
-public interface AddressBookInterface {
+public interface IAddressBook {
     void addPerson();
     void deletePerson();
     void editPerson();

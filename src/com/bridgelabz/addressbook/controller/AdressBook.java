@@ -46,7 +46,7 @@ public class AdressBook {
                     break;
                 default:
                     System.out.println("Invalid choice");
-
+                    break;
             }
         }
     }
