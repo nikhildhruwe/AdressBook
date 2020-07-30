@@ -1,7 +1,11 @@
 package com.bridgelabz.addressbook.services;
 
 import com.bridgelabz.addressbook.model.PersonDetails;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -10,7 +14,8 @@ import java.util.stream.Collectors;
 
 public class PersonComputation implements IAddressBook {
     private final ArrayList<PersonDetails> personList = new ArrayList<>();
-
+    JSONArray personJSONList = new JSONArray();
+    JSONObject jsonPersonObject = new JSONObject();
     //******Adding new Person Record to List.*****//
     public void addPerson() {
         try {
@@ -41,10 +46,24 @@ public class PersonComputation implements IAddressBook {
                 String phone = scan.next();
                 PersonDetails personDetails = new PersonDetails(firstName, lastName, address, city, state, zip, phone);
                 personList.add(personDetails);
+                this.writeToJSONFile(personDetails);
             }
         }catch (Exception e){
             System.out.println("Invalid input, please check again");
             addPerson();
+        }
+    }
+
+    private void writeToJSONFile(PersonDetails person) {
+        jsonPersonObject.put("First name", person.getFirstName());
+        jsonPersonObject.put("Last name", person.getLastName());
+        jsonPersonObject.put("Phone Number", person.getPhone());
+        personJSONList.add(jsonPersonObject);
+        try (FileWriter file = new FileWriter("personList.json")) {
+            file.write(personJSONList.toJSONString());
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -59,8 +78,11 @@ public class PersonComputation implements IAddressBook {
         PersonDetails personDetails = personList.stream().filter(name -> (name.getFirstName() + " "
                 + name.getLastName()).equalsIgnoreCase(firstName
                 + " " + lastName)).findAny().orElse(null);
-        if (personDetails != null)
+        if (personDetails != null) {
+
+            personJSONList.remove(personDetails);
             personList.remove(personDetails);
+        }
         else
             System.out.println("No Records Found.");
     }

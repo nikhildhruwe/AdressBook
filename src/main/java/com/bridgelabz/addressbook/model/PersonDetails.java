@@ -2,9 +2,10 @@
 package com.bridgelabz.addressbook.model;
 
 public class PersonDetails {
-    private String firstName;
-    private String lastName;
+    private final String firstName;
+    private final String lastName;
     private String address;
+
     private String city;
     private String state;
     private int zip;
@@ -61,9 +62,18 @@ public class PersonDetails {
         this.phone = phone;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
 
     public String toString() {
-        return "NAME: " + firstName + " " + lastName + "  " + "ADDRESS: " + address + "  " + "CITY: " + city + "  " + "STATE: " + state + "  " + "ZIPCODE: " + zip + "  " + "PHONE: " + phone;
+        return "NAME: " + firstName + " " + lastName + "  " + "ADDRESS: " +
+                address + "  " + "CITY: " + city + "  " + "STATE: " + state +
+                "  " + "ZIPCODE: " + zip + "  " + "PHONE: " + phone;
 
     }
 }
