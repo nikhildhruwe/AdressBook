@@ -79,8 +79,6 @@ public class PersonComputation implements IAddressBook {
                 + name.getLastName()).equalsIgnoreCase(firstName
                 + " " + lastName)).findAny().orElse(null);
         if (personDetails != null) {
-
-            personJSONList.remove(personDetails);
             personList.remove(personDetails);
         }
         else
