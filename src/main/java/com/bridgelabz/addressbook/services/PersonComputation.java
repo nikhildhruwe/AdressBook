@@ -1,14 +1,6 @@
 package com.bridgelabz.addressbook.services;
 
 import com.bridgelabz.addressbook.model.PersonDetails;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,12 +9,11 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class PersonComputation implements IAddressBook {
-    private final ArrayList<PersonDetails> personList = new ArrayList<>();
-    JSONArray personJSONList = new JSONArray();
-    JSONParser jsonParser = new JSONParser();
+
+
     //******Adding new Person Record to List.*****//
-    public void addPerson() {
-        try {
+    public ArrayList<PersonDetails> addPerson(ArrayList<PersonDetails> personList) {
+//            ArrayList<PersonDetails> personList = personData;
             Scanner scan = new Scanner(System.in);
             System.out.println("\nTo add person");
 
@@ -31,8 +22,11 @@ public class PersonComputation implements IAddressBook {
 
             System.out.print("Enter last name: ");
             String lastName = scan.nextLine();
-            if (equals(firstName + " " + lastName))
+            boolean status = personList.stream().anyMatch(personName -> (personName.getFirstName() + " "
+                    + personName.getLastName()).equalsIgnoreCase((String) firstName + " " + lastName));
+            if (status) {
                 System.out.println("Name already exists");
+            }
             else {
                 System.out.print("Enter Address: ");
                 String address = scan.nextLine();
@@ -50,45 +44,12 @@ public class PersonComputation implements IAddressBook {
                 String phone = scan.next();
                 PersonDetails personDetails = new PersonDetails(firstName, lastName, address, city, state, zip, phone);
                 personList.add(personDetails);
-                this.writeToJSONFile(personDetails);
             }
-        }catch (Exception e){
-            System.out.println("Invalid input, please check again");
-            addPerson();
-        }
-    }
-
-    private void writeToJSONFile(PersonDetails person) {
-        JSONObject jsonPersonObject = new JSONObject();
-        jsonPersonObject.put("First name", person.getFirstName());
-        jsonPersonObject.put("Last name", person.getLastName());
-        jsonPersonObject.put("Phone Number", person.getPhone());
-        personJSONList.add(jsonPersonObject);
-        try (FileWriter file = new FileWriter("personList.json")) {
-            file.write(personJSONList.toJSONString());
-            file.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private JSONArray jsonReader()
-    {
-        JSONArray addressBook = null;
-        try (FileReader reader = new FileReader("personList.json"))
-        {
-            Object obj = jsonParser.parse(reader);
-            addressBook = (JSONArray) obj;
-        }
-        catch (ParseException | IOException e)
-        {
-            e.printStackTrace();
-        }
-        return addressBook;
+            return personList;
     }
 
     //******Deleting person record*****//
-    public void deletePerson() {
+    public ArrayList<PersonDetails> deletePerson(ArrayList<PersonDetails> personList) {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter your First name");
         String firstName = scan.next();
@@ -98,23 +59,15 @@ public class PersonComputation implements IAddressBook {
         PersonDetails personDetails = personList.stream().filter(name -> (name.getFirstName() + " "
                 + name.getLastName()).equalsIgnoreCase(firstName
                 + " " + lastName)).findAny().orElse(null);
-        if (personDetails != null) {
-            int index = personList.indexOf(personDetails);
-            personJSONList.remove(index);
-            try (FileWriter file = new FileWriter("personList.json")) {
-                file.write(personJSONList.toJSONString());
-                file.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (personDetails != null)
             personList.remove(personDetails);
-        }
         else
             System.out.println("No Records Found.");
+        return personList;
     }
 
     //Editing person record except their name*****//
-    public void editPerson() {
+    public void editPerson(ArrayList<PersonDetails> personList) {
         try {
             Scanner scan = new Scanner(System.in);
             System.out.println("Enter your First name");
@@ -149,32 +102,32 @@ public class PersonComputation implements IAddressBook {
                 System.out.println("Record does not exist");
         }catch (Exception e){
             System.out.println("Invalid input, please check again");
-            editPerson();
+            editPerson(personList);
         }
     }
 
     //Sorting list by name
-    public void sortByName() {
+    public void sortByName(ArrayList<PersonDetails> personList) {
         personList.sort(Comparator.comparing(PersonDetails::getFirstName));
     }
 
     //Sorting list by City,Zip Or state.
-    public void sortByCityStateZip() {
+    public void sortByCityStateZip(ArrayList<PersonDetails> personList) {
         Scanner scan = new Scanner(System.in);
         System.out.println("choose:\n1:City\n2:State\n3:Zip");
         int Choice = scan.nextInt();
         switch (Choice) {
             case 1:
                 personList.sort(Comparator.comparing(PersonDetails::getCity));
-                print();
+                print(personList);
                 break;
             case 2:
                 personList.sort(Comparator.comparing(PersonDetails::getState));
-                print();
+                print(personList);
                 break;
             case 3:
                 personList.sort(Comparator.comparingInt(PersonDetails::getZip));
-                print();
+                print(personList);
                 break;
             default:
                 System.out.println("Invalid option");
@@ -182,7 +135,7 @@ public class PersonComputation implements IAddressBook {
     }
 
     //******View person available by giving state and city name.****//
-    public void viewPersonCityState() {
+    public void viewPersonCityState(ArrayList<PersonDetails> personList) {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter State");
         String state = scan.nextLine();
@@ -198,7 +151,7 @@ public class PersonComputation implements IAddressBook {
     }
 
     //******View person in particular city or state.******//
-    public void cityOrState() {
+    public void cityOrState(ArrayList<PersonDetails> personList) {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter State");
         String state = scan.nextLine();
@@ -221,14 +174,8 @@ public class PersonComputation implements IAddressBook {
     }
 
     //Print the contents of address book
-    public void print() {
+    public void print(ArrayList<PersonDetails> personList) {
         System.out.println("ADDRESS BOOK DETAILS : ");
         personList.forEach(System.out::println);
-    }
-
-    @Override
-    public boolean equals(Object name) {
-        return personList.stream().anyMatch(personName -> (personName.getFirstName() + " "
-                + personName.getLastName()).equalsIgnoreCase((String) name));
     }
 }
