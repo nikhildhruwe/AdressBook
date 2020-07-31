@@ -2,7 +2,6 @@ package com.bridgelabz.addressbook.services;
 
 import com.bridgelabz.addressbook.model.PersonDetails;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
@@ -12,7 +11,7 @@ public class PersonComputation implements IAddressBook {
 
 
     //******Adding new Person Record to List.*****//
-    public ArrayList<PersonDetails> addPerson(ArrayList<PersonDetails> personList) {
+    public List<PersonDetails> addPerson(List<PersonDetails> personList) {
         Scanner scan = new Scanner(System.in);
         System.out.println("\nTo add person");
 
@@ -47,7 +46,7 @@ public class PersonComputation implements IAddressBook {
     }
 
     //******Deleting person record*****//
-    public ArrayList<PersonDetails> deletePerson(ArrayList<PersonDetails> personList) {
+    public void deletePerson(List<PersonDetails> personList) {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter your First name");
         String firstName = scan.next();
@@ -61,11 +60,10 @@ public class PersonComputation implements IAddressBook {
             personList.remove(personDetails);
         else
             System.out.println("No Records Found.");
-        return personList;
     }
 
     //Editing person record except their name*****//
-    public void editPerson(ArrayList<PersonDetails> personList) {
+    public void editPerson(List<PersonDetails> personList) {
         try {
             Scanner scan = new Scanner(System.in);
             System.out.println("Enter your First name");
@@ -105,12 +103,12 @@ public class PersonComputation implements IAddressBook {
     }
 
     //Sorting list by name
-    public void sortByName(ArrayList<PersonDetails> personList) {
+    public void sortByName(List<PersonDetails> personList) {
         personList.sort(Comparator.comparing(PersonDetails::getFirstName));
     }
 
     //Sorting list by City,Zip Or state.
-    public void sortByCityStateZip(ArrayList<PersonDetails> personList) {
+    public void sortByCityStateZip(List<PersonDetails> personList) {
         Scanner scan = new Scanner(System.in);
         System.out.println("choose:\n1:City\n2:State\n3:Zip");
         int Choice = scan.nextInt();
@@ -133,7 +131,7 @@ public class PersonComputation implements IAddressBook {
     }
 
     //******View person available by giving state and city name.****//
-    public void viewPersonCityState(ArrayList<PersonDetails> personList) {
+    public void viewPersonCityState(List<PersonDetails> personList) {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter State");
         String state = scan.nextLine();
@@ -149,7 +147,7 @@ public class PersonComputation implements IAddressBook {
     }
 
     //******View person in particular city or state.******//
-    public void cityOrState(ArrayList<PersonDetails> personList) {
+    public void cityOrState(List<PersonDetails> personList) {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter State");
         String state = scan.nextLine();
@@ -172,7 +170,7 @@ public class PersonComputation implements IAddressBook {
     }
 
     //Print the contents of address book
-    public void print(ArrayList<PersonDetails> personList) {
+    public void print(List<PersonDetails> personList) {
         System.out.println("ADDRESS BOOK DETAILS : ");
         personList.forEach(System.out::println);
     }

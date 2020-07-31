@@ -4,8 +4,7 @@ import com.bridgelabz.addressbook.model.PersonDetails;
 import com.bridgelabz.addressbook.utility.FileOperations;
 import com.bridgelabz.addressbook.services.PersonComputation;
 
-
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
@@ -13,6 +12,7 @@ import static java.lang.System.exit;
 public class AddressBook {
     private static final String JSON_FILE_PATH = "./src/main/resources/personList.json";
     private static final String CSV_FILE_PATH = "./src/main/resources/personList.csv";
+    private static final String JSON_USING_GSON_FILE_PATH = "./src/main/resources/personListUsingGSON.json";
 
     public static void main(String[] args) {
         System.out.println("\tWelcome to Address Book");
@@ -22,7 +22,8 @@ public class AddressBook {
         Scanner scan = new Scanner(System.in);
         int operationType = 0;
         String filePath = null;
-        System.out.println("Select file operation type \n1. JSON File Conversion\n2.  CSV file Conversion");
+        System.out.println("Select file operation type \n1. JSON File Conversion" +
+                                                                "\n2.  CSV file Conversion\n3. JSON using gson");
         int operationChoice = scan.nextInt();
         switch (operationChoice) {
             case 1:
@@ -32,6 +33,10 @@ public class AddressBook {
             case 2:
                 operationType = 2;
                 filePath = CSV_FILE_PATH;
+                break;
+            case 3:
+                operationType = 3;
+                filePath = JSON_USING_GSON_FILE_PATH;
                 break;
             default:
                 System.out.println("Invalid Input");
@@ -44,12 +49,12 @@ public class AddressBook {
                         " \n5: Sort by Name \n6: Sort by city,State or Zip \n7: View Person by City and State" +
                         " \n8: View Person by City or State \n9: Exit");
 
-                ArrayList<PersonDetails> personList;
+                List<PersonDetails> personList;
                 int choice = scan.nextInt();
                 switch (choice) {
                     case 1:
                         personList = fileOperations.readFromFile(filePath, operationType);
-                        ArrayList<PersonDetails> personDetails = personComputation.addPerson(personList);
+                        List<PersonDetails> personDetails = personComputation.addPerson(personList);
                         fileOperations.writeToFile(personDetails, filePath, operationType);
                         break;
                     case 2:
