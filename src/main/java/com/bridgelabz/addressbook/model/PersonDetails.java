@@ -74,6 +74,5 @@ public class PersonDetails {
         return "NAME: " + firstName + " " + lastName + "  " + "ADDRESS: " +
                 address + "  " + "CITY: " + city + "  " + "STATE: " + state +
                 "  " + "ZIPCODE: " + zip + "  " + "PHONE: " + phone;
-
     }
 }

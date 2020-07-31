@@ -13,7 +13,6 @@ public class PersonComputation implements IAddressBook {
 
     //******Adding new Person Record to List.*****//
     public ArrayList<PersonDetails> addPerson(ArrayList<PersonDetails> personList) {
-//            ArrayList<PersonDetails> personList = personData;
             Scanner scan = new Scanner(System.in);
             System.out.println("\nTo add person");
 

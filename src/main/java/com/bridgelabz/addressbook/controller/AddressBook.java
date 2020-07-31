@@ -1,23 +1,43 @@
 package com.bridgelabz.addressbook.controller;
 
 import com.bridgelabz.addressbook.model.PersonDetails;
-import com.bridgelabz.addressbook.utility.JSONOperations;
+import com.bridgelabz.addressbook.utility.FileOperations;
 import com.bridgelabz.addressbook.services.PersonComputation;
 
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static java.lang.System.exit;
+
 public class AddressBook {
-    private static final String JSON_FILE_PATH = "./src/main/resources/personList.json";;
+    private static final String JSON_FILE_PATH = "./src/main/resources/personList.json";
+    private static final String CSV_FILE_PATH = "./src/main/resources/personList.csv";
+
 
     public static void main(String[] args) {
 
         System.out.println("\tWelcome to Address Book");
         PersonComputation personComputation = new PersonComputation();
-        JSONOperations jsonOperations = new JSONOperations();
+        FileOperations fileOperations = new FileOperations();
         // Menu for operations on Array List
         Scanner scan = new Scanner(System.in);
+        int operationType = 0;
+        String filePath = null;
+        System.out.println("Select file operation type \n1. JSON File Conversion\n2.  CSV file Conversion");
+        int operationChoice = scan.nextInt();
+        switch (operationChoice){
+            case 1 :
+                    operationType = 1;
+                    filePath = JSON_FILE_PATH;
+                      break;
+            case 2 :  operationType = 2;
+                      filePath = CSV_FILE_PATH;
+                      break;
+            default:
+                System.out.println("Invalid Input");
+                exit(0);
+        }
         boolean status = true;
         try {
         while (status) {
@@ -29,43 +49,43 @@ public class AddressBook {
             int choice = scan.nextInt();
             switch (choice) {
                 case 1:
-                    personList = jsonOperations.readFromJSON(JSON_FILE_PATH);
+                    personList = fileOperations.readFromFile(filePath, operationType);
                     ArrayList<PersonDetails> personDetails = personComputation.addPerson(personList);
-                    jsonOperations.writeToJSONFile(personDetails, JSON_FILE_PATH);
+                    fileOperations.writeToFile(personDetails, filePath, operationType);
                     break;
                 case 2:
-                    personList = jsonOperations.readFromJSON(JSON_FILE_PATH);
+                    personList = fileOperations.readFromFile(filePath, operationType);
                     personComputation.deletePerson(personList);
-                    jsonOperations.writeToJSONFile(personList, JSON_FILE_PATH);
+                    fileOperations.writeToFile(personList, filePath, operationType);
                     break;
                 case 3:
-                    personList = jsonOperations.readFromJSON(JSON_FILE_PATH);
+                    personList = fileOperations.readFromFile(filePath, operationType);
                     personComputation.print(personList);
                     break;
                 case 4:
-                    personList = jsonOperations.readFromJSON(JSON_FILE_PATH);
+                    personList = fileOperations.readFromFile(filePath, operationType);
                     personComputation.editPerson(personList);
-                    jsonOperations.writeToJSONFile(personList, JSON_FILE_PATH);
+                    fileOperations.writeToFile(personList, filePath, operationType);
                     break;
                 case 5:
-                    personList = jsonOperations.readFromJSON(JSON_FILE_PATH);
+                    personList = fileOperations.readFromFile(filePath, operationType);
                     personComputation.sortByName(personList);
-                    jsonOperations.writeToJSONFile(personList, JSON_FILE_PATH);
+                    fileOperations.writeToFile(personList, filePath, operationType);
                     break;
                 case 6:
-                    personList = jsonOperations.readFromJSON(JSON_FILE_PATH);
+                    personList = fileOperations.readFromFile(filePath, operationType);
                     personComputation.sortByCityStateZip(personList);
-                    jsonOperations.writeToJSONFile(personList, JSON_FILE_PATH);
+                    fileOperations.writeToFile(personList, filePath, operationType);
                     break;
                 case 7:
-                    personList = jsonOperations.readFromJSON(JSON_FILE_PATH);
+                    personList = fileOperations.readFromFile(filePath, operationType);
                     personComputation.viewPersonCityState(personList);
-                    jsonOperations.writeToJSONFile(personList, JSON_FILE_PATH);
+                    fileOperations.writeToFile(personList, filePath, operationType);
                     break;
                 case 8:
-                    personList = jsonOperations.readFromJSON(JSON_FILE_PATH);
+                    personList = fileOperations.readFromFile(filePath, operationType);
                     personComputation.cityOrState(personList);
-                    jsonOperations.writeToJSONFile(personList, JSON_FILE_PATH);
+                    fileOperations.writeToFile(personList, filePath, operationType);
                     break;
                 case 9:
                     status = false;
