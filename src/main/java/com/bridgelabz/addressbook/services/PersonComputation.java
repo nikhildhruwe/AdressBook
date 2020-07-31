@@ -3,9 +3,13 @@ package com.bridgelabz.addressbook.services;
 import com.bridgelabz.addressbook.model.PersonDetails;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -15,7 +19,7 @@ import java.util.stream.Collectors;
 public class PersonComputation implements IAddressBook {
     private final ArrayList<PersonDetails> personList = new ArrayList<>();
     JSONArray personJSONList = new JSONArray();
-    JSONObject jsonPersonObject = new JSONObject();
+    JSONParser jsonParser = new JSONParser();
     //******Adding new Person Record to List.*****//
     public void addPerson() {
         try {
@@ -55,6 +59,7 @@ public class PersonComputation implements IAddressBook {
     }
 
     private void writeToJSONFile(PersonDetails person) {
+        JSONObject jsonPersonObject = new JSONObject();
         jsonPersonObject.put("First name", person.getFirstName());
         jsonPersonObject.put("Last name", person.getLastName());
         jsonPersonObject.put("Phone Number", person.getPhone());
@@ -65,6 +70,21 @@ public class PersonComputation implements IAddressBook {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private JSONArray jsonReader()
+    {
+        JSONArray addressBook = null;
+        try (FileReader reader = new FileReader("personList.json"))
+        {
+            Object obj = jsonParser.parse(reader);
+            addressBook = (JSONArray) obj;
+        }
+        catch (ParseException | IOException e)
+        {
+            e.printStackTrace();
+        }
+        return addressBook;
     }
 
     //******Deleting person record*****//
@@ -79,6 +99,14 @@ public class PersonComputation implements IAddressBook {
                 + name.getLastName()).equalsIgnoreCase(firstName
                 + " " + lastName)).findAny().orElse(null);
         if (personDetails != null) {
+            int index = personList.indexOf(personDetails);
+            personJSONList.remove(index);
+            try (FileWriter file = new FileWriter("personList.json")) {
+                file.write(personJSONList.toJSONString());
+                file.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             personList.remove(personDetails);
         }
         else
