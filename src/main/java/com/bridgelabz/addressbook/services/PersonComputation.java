@@ -13,38 +13,37 @@ public class PersonComputation implements IAddressBook {
 
     //******Adding new Person Record to List.*****//
     public ArrayList<PersonDetails> addPerson(ArrayList<PersonDetails> personList) {
-            Scanner scan = new Scanner(System.in);
-            System.out.println("\nTo add person");
+        Scanner scan = new Scanner(System.in);
+        System.out.println("\nTo add person");
 
-            System.out.print("\nEnter first name: ");
-            String firstName = scan.nextLine();
+        System.out.print("\nEnter first name: ");
+        String firstName = scan.nextLine();
 
-            System.out.print("Enter last name: ");
-            String lastName = scan.nextLine();
-            boolean status = personList.stream().anyMatch(personName -> (personName.getFirstName() + " "
-                    + personName.getLastName()).equalsIgnoreCase((String) firstName + " " + lastName));
-            if (status) {
-                System.out.println("Name already exists");
-            }
-            else {
-                System.out.print("Enter Address: ");
-                String address = scan.nextLine();
+        System.out.print("Enter last name: ");
+        String lastName = scan.nextLine();
+        boolean status = personList.stream().anyMatch(personName -> (personName.getFirstName() + " "
+                + personName.getLastName()).equalsIgnoreCase((String) firstName + " " + lastName));
+        if (status) {
+            System.out.println("Name already exists");
+        } else {
+            System.out.print("Enter Address: ");
+            String address = scan.nextLine();
 
-                System.out.print("Enter City: ");
-                String city = scan.nextLine();
+            System.out.print("Enter City: ");
+            String city = scan.nextLine();
 
-                System.out.print("Enter State: ");
-                String state = scan.nextLine();
+            System.out.print("Enter State: ");
+            String state = scan.nextLine();
 
-                System.out.print("Enter Zip: ");
-                int zip = scan.nextInt();
+            System.out.print("Enter Zip: ");
+            int zip = scan.nextInt();
 
-                System.out.print("Enter Phone Number: ");
-                String phone = scan.next();
-                PersonDetails personDetails = new PersonDetails(firstName, lastName, address, city, state, zip, phone);
-                personList.add(personDetails);
-            }
-            return personList;
+            System.out.print("Enter Phone Number: ");
+            String phone = scan.next();
+            PersonDetails personDetails = new PersonDetails(firstName, lastName, address, city, state, zip, phone);
+            personList.add(personDetails);
+        }
+        return personList;
     }
 
     //******Deleting person record*****//
@@ -99,7 +98,7 @@ public class PersonComputation implements IAddressBook {
                 personDetails.setPhone(phone);
             } else
                 System.out.println("Record does not exist");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Invalid input, please check again");
             editPerson(personList);
         }
