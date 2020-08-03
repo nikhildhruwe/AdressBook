@@ -22,7 +22,8 @@ public class PersonComputation implements IAddressBook {
         System.out.print("Enter last name: ");
         String lastName = scan.nextLine();
         boolean status = personList.stream().anyMatch(personName -> (personName.getFirstName() + " "
-                + personName.getLastName()).equalsIgnoreCase((String) firstName + " " + lastName));
+                + personName.getLastName()).equalsIgnoreCase(firstName + " " + lastName));
+
         if (status) {
             System.out.println("Name already exists");
         } else {
@@ -40,6 +41,7 @@ public class PersonComputation implements IAddressBook {
 
             System.out.print("Enter Phone Number: ");
             String phone = scan.next();
+
             PersonDetails personDetails = new PersonDetails(firstName, lastName, address, city, state, zip, phone);
             personList.add(personDetails);
         }
@@ -77,25 +79,46 @@ public class PersonComputation implements IAddressBook {
                     + name.getLastName()).equalsIgnoreCase(firstName
                     + " " + lastName)).findAny().orElse(null);
             if (personDetails != null) {
-                System.out.print("Enter Address: ");
-                String address = scan.nextLine();
-                personDetails.setAddress(address);
+                boolean editStatus = true;
+                while (editStatus) {
+                    System.out.println("\nChoose option to edit \n1. Address\n2. City\n3. State\n" +
+                            "4. Zip\n5. Phone number\n6. Save and exit\n");
+                    int choice = scan.nextInt();
+                    switch (choice) {
+                        case 1:
+                            System.out.print("Enter new Address: ");
+                            String address = scan.next();
+                            personDetails.setAddress(address);
+                            break;
+                        case 2:
+                            System.out.print("Enter new City: ");
+                            String city = scan.next();
+                            personDetails.setCity(city);
+                            break;
+                        case 3:
+                            System.out.print("Enter new State: ");
+                            String state = scan.next();
+                            personDetails.setState(state);
+                            break;
+                        case 4:
+                            System.out.print("Enter new Zip: ");
+                            int zip = scan.nextInt();
+                            personDetails.setZip(zip);
+                            break;
+                        case 5:
+                            System.out.print("Enter new Phone Number: ");
+                            String phone = scan.next();
+                            personDetails.setPhone(phone);
+                            break;
+                        case 6:
+                            System.out.println(" Saved");
+                            editStatus = false;
+                            break;
+                        default:
+                            System.out.println("Invalid input.");
 
-                System.out.print("Enter City: ");
-                String city = scan.nextLine();
-                personDetails.setCity(city);
-
-                System.out.print("Enter State: ");
-                String state = scan.nextLine();
-                personDetails.setState(state);
-
-                System.out.print("Enter Zip: ");
-                int zip = scan.nextInt();
-                personDetails.setZip(zip);
-
-                System.out.print("Enter Phone Number: ");
-                String phone = scan.next();
-                personDetails.setPhone(phone);
+                    }
+                }
             } else
                 System.out.println("Record does not exist");
         } catch (Exception e) {
