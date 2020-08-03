@@ -11,16 +11,6 @@ import java.util.stream.Collectors;
 
 public class PersonComputation implements IAddressBook {
 
-
-    private boolean validateInput(String input, String validator) {
-        Pattern pattern = Pattern.compile(validator);
-        if (pattern.matcher(input).matches())
-            return true;
-        else
-            System.out.print("Invalid Input. Please Enter Again.\n");
-        return false;
-    }
-
     //******Adding new Person Record to List.*****//
     public List<PersonDetails> addPerson(List<PersonDetails> personList) {
         Scanner scan = new Scanner(System.in);

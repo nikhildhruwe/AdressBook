@@ -85,7 +85,6 @@ public class FileOperations {
     }
 
     public List<PersonDetails> readFromFile(String filePath, int operationType) {
-
         switch (operationType) {
             case 1:
                 personDetailsList = jsonReader(filePath);
@@ -137,8 +136,7 @@ public class FileOperations {
             FileReader reader = new FileReader(filePath);
             Object obj = jsonParser.parse(reader);
             JSONArray personList = (JSONArray) obj;
-            List<PersonDetails> finalPersonDetailsList = personDetailsList;
-            personList.forEach(person -> finalPersonDetailsList.add(parsePersonObject((JSONObject) person)));
+            personList.forEach(person -> personDetailsList.add(parsePersonObject((JSONObject) person)));
         } catch (ParseException | IOException e) {
             e.printStackTrace();
         }

@@ -1,0 +1,22 @@
+{
+  "AddressBook": [
+    {
+      "id": 1,
+      "Zip": "587301",
+      "Address": "Balapur",
+      "Phone": "8105212314",
+      "State": "KA",
+      "Name": "Shravan",
+      "City": "Pune"
+    },
+    {
+      "id": 2,
+      "Zip": "5556699",
+      "Address": "PN",
+      "Phone": "5111998870",
+      "State": "TS",
+      "Name": "Ankit",
+      "City": "Hyderabad"
+    }
+  ]
+}
