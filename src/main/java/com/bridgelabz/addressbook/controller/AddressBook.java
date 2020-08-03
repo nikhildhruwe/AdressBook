@@ -23,7 +23,7 @@ public class AddressBook {
         int operationType = 0;
         String filePath = null;
         System.out.println("Select file operation type \n1. JSON File Conversion" +
-                                                                "\n2.  CSV file Conversion\n3. JSON using gson");
+                                                                "\n2. CSV file Conversion\n3. JSON using gson");
         int operationChoice = scan.nextInt();
         switch (operationChoice) {
             case 1:
