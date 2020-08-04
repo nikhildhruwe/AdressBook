@@ -6,7 +6,6 @@ import io.restassured.response.Response;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,8 +24,8 @@ public class AddressBookRESTAssureTest {
     @Test
     public void onCallingList_ReturnPersonList() {
         Response response = getPersonList();
-        System.out.println("At First: "+response.asString());
-        response.then().body("id",Matchers.hasItems(1,2));
+        System.out.println("At First: " + response.asString());
+        response.then().body("id", Matchers.hasItems(1, 2));
         response.then().body("State", Matchers.hasItems("TS"));
     }
 
@@ -41,8 +40,8 @@ public class AddressBookRESTAssureTest {
         String responseString = response.asString();
         JsonObject jsonObject = new Gson().fromJson(responseString, JsonObject.class);
         int id = jsonObject.get("id").getAsInt();
-        response.then().body("id",Matchers.any(Integer.class));
-        response.then().body("Name",Matchers.is("Jai"));
+        response.then().body("id", Matchers.any(Integer.class));
+        response.then().body("Name", Matchers.is("Jai"));
         System.out.println(responseString);
     }
 
@@ -67,7 +66,6 @@ public class AddressBookRESTAssureTest {
         MatcherAssert.assertThat(statusCode, CoreMatchers.is(200));
         response = getPersonList();
         System.out.println("AT END:" + response.asString());
-        response.then().body("Name",Matchers.not("3"));
+        response.then().body("Name", Matchers.not("3"));
     }
 }
-//json-server --port 4000 --routes routes.json --watch RESTAssureFile.json
