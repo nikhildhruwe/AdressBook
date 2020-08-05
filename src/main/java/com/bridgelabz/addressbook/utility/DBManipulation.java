@@ -85,7 +85,7 @@ public class DBManipulation {
                 String state = resultSet.getString("state");
                 String zip = resultSet.getString("zip");
                 String phone = resultSet.getString("phone");
-                System.out.println("ID:" + id + "NAME: " + firstName + " " + lastName + "  " + "ADDRESS: " +
+                System.out.println("ID:" + id + ",NAME: " + firstName + " " + lastName + "  " + "ADDRESS: " +
                         address + "  " + "CITY: " + city + "  " + "STATE: " + state +
                         "  " + "ZIPCODE: " + zip + "  " + "PHONE: " + phone);
             }
@@ -164,16 +164,13 @@ public class DBManipulation {
         int userChoice = scan.nextInt();
         switch (userChoice) {
             case 1:
-                query = "SELECT * FROM person ORDER BY name ASC";
-                break;
-            case 2:
-                query = "SELECT * FROM person ORDER BY zipcode ASC";
-                break;
-            case 3:
                 query = "SELECT * FROM person ORDER BY city ASC";
                 break;
-            case 4:
+            case 2:
                 query = "SELECT * FROM person ORDER BY state ASC";
+                break;
+            case 3:
+                query = "SELECT * FROM person ORDER BY zip ASC";
                 break;
             default:
                 System.out.println("Invalid Input");
@@ -194,11 +191,9 @@ public class DBManipulation {
 
     public void viewByCityORState(Connection connection) {
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter City: ");
-        String city = scan.nextLine();
-        System.out.print("Enter State: ");
-        String state = scan.nextLine();
-        String query = "SELECT * FROM person WHERE city = '" + city + "' OR state = '" + state + "'";
+        System.out.print("Enter City or State: ");
+        String place = scan.nextLine();
+        String query = "SELECT * FROM person WHERE city = '" + place + "' OR state = '" + place + "'";
         this.displayDBDetails(query, connection);
     }
 }
