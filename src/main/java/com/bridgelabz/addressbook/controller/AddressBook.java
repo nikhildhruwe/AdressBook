@@ -2,7 +2,7 @@ package com.bridgelabz.addressbook.controller;
 
 import com.bridgelabz.addressbook.model.PersonDetails;
 import com.bridgelabz.addressbook.utility.FileOperations;
-import com.bridgelabz.addressbook.services.PersonComputation;
+import com.bridgelabz.addressbook.services.PersonRecord;
 
 import java.util.List;
 import java.util.Scanner;
@@ -16,14 +16,14 @@ public class AddressBook {
 
     public static void main(String[] args) {
         System.out.println("\tWelcome to Address Book");
-        PersonComputation personComputation = new PersonComputation();
+        PersonRecord personRecord = new PersonRecord();
         FileOperations fileOperations = new FileOperations();
         // Menu for operations on Array List
         Scanner scan = new Scanner(System.in);
         int operationType = 0;
         String filePath = null;
-        System.out.println("Select file operation type \n1. JSON File Conversion" +
-                                                                "\n2. CSV file Conversion\n3. JSON using gson");
+        System.out.println("Select file operation type \n1. JSON File Conversion" + "\n2. CSV file Conversion\n" +
+                "3. JSON using gson\n4. ");
         int operationChoice = scan.nextInt();
         switch (operationChoice) {
             case 1:
@@ -54,41 +54,41 @@ public class AddressBook {
                 switch (choice) {
                     case 1:
                         personList = fileOperations.readFromFile(filePath, operationType);
-                        List<PersonDetails> personDetails = personComputation.addPerson(personList);
+                        List<PersonDetails> personDetails = personRecord.addPerson(personList);
                         fileOperations.writeToFile(personDetails, filePath, operationType);
                         break;
                     case 2:
                         personList = fileOperations.readFromFile(filePath, operationType);
-                        personComputation.deletePerson(personList);
+                        personRecord.deletePerson(personList);
                         fileOperations.writeToFile(personList, filePath, operationType);
                         break;
                     case 3:
                         personList = fileOperations.readFromFile(filePath, operationType);
-                        personComputation.print(personList);
+                        personRecord.print(personList);
                         break;
                     case 4:
                         personList = fileOperations.readFromFile(filePath, operationType);
-                        personComputation.editPerson(personList);
+                        personRecord.editPerson(personList);
                         fileOperations.writeToFile(personList, filePath, operationType);
                         break;
                     case 5:
                         personList = fileOperations.readFromFile(filePath, operationType);
-                        personComputation.sortByName(personList);
+                        personRecord.sortByName(personList);
                         fileOperations.writeToFile(personList, filePath, operationType);
                         break;
                     case 6:
                         personList = fileOperations.readFromFile(filePath, operationType);
-                        personComputation.sortByCityStateZip(personList);
+                        personRecord.sortByCityStateZip(personList);
                         fileOperations.writeToFile(personList, filePath, operationType);
                         break;
                     case 7:
                         personList = fileOperations.readFromFile(filePath, operationType);
-                        personComputation.viewPersonCityState(personList);
+                        personRecord.viewPersonCityState(personList);
                         fileOperations.writeToFile(personList, filePath, operationType);
                         break;
                     case 8:
                         personList = fileOperations.readFromFile(filePath, operationType);
-                        personComputation.cityOrState(personList);
+                        personRecord.cityOrState(personList);
                         fileOperations.writeToFile(personList, filePath, operationType);
                         break;
                     case 9:
