@@ -29,7 +29,7 @@ public class AddressBook {
         int operationType = 0;
         String filePath = null;
         System.out.println("Select file operation type \n1. JSON File Conversion" + "\n2. CSV file Conversion\n" +
-                "3. JSON using gson\n4. JDBC");
+                "3. JSON using gson\n4. Operations using Data Base");
         int operationChoice = scan.nextInt();
         switch (operationChoice) {
             case 1:
@@ -57,81 +57,76 @@ public class AddressBook {
                 System.out.println("\nSelect : \n1: Add Person details \n2: Delete \n3: Display \n4: Edit Record" +
                         " \n5: Sort by Name \n6: Sort by city,State or Zip \n7: View Person by City and State" +
                         " \n8: View Person by City or State \n9: Exit");
-
-                if (operationChoice == 4) {
-                    int choice = scan.nextInt();
-                    switch (choice) {
-                        case 1:
-                            DBManipulation.addPerson(connection);
-                            break;
-                        case 2:
-                            DBManipulation.deletePerson(connection);
-                            break;
-                        case 3:
-                            DBManipulation.display(connection);
-                            break;
-                        case 4:
-                            DBManipulation.edit(connection);
-                            break;
-                        case 5:
-                            DBManipulation.sortByName(connection);
-                            break;
-                        case 6:
-                            DBManipulation.sortByStateCityZip(connection);
-                            break;
-                        case 7:
-                            DBManipulation.viewByCityAndState(connection);
-                            break;
-                        case 8:
-                            DBManipulation.viewByCityORState(connection);
-                            break;
-                        case 9:
-                            status = false;
-                            break;
-                        default:
-                            System.out.println("Invalid choice");
-                            break;
-                    }
-                }
-                if (operationChoice != 4) {
                     List<PersonDetails> personList;
                     int choice = scan.nextInt();
                     switch (choice) {
                         case 1:
+                            if (operationChoice == 4 ){
+                                DBManipulation.addPerson(connection);
+                                break;
+                            }
                             personList = fileOperations.readFromFile(filePath, operationType);
                             List<PersonDetails> personDetails = personRecord.addPerson(personList);
                             fileOperations.writeToFile(personDetails, filePath, operationType);
                             break;
                         case 2:
+                            if (operationChoice == 4 ){
+                                DBManipulation.deletePerson(connection);
+                                break;
+                            }
                             personList = fileOperations.readFromFile(filePath, operationType);
                             personRecord.deletePerson(personList);
                             fileOperations.writeToFile(personList, filePath, operationType);
                             break;
                         case 3:
+                            if (operationChoice == 4 ){
+                                DBManipulation.display(connection);
+                                break;
+                            }
                             personList = fileOperations.readFromFile(filePath, operationType);
                             personRecord.print(personList);
                             break;
                         case 4:
+                            if (operationChoice == 4 ){
+                                DBManipulation.edit(connection);
+                                break;
+                            }
                             personList = fileOperations.readFromFile(filePath, operationType);
                             personRecord.editPerson(personList);
                             fileOperations.writeToFile(personList, filePath, operationType);
                             break;
                         case 5:
+                            if (operationChoice == 4 ){
+                                DBManipulation.sortByName(connection);
+                                break;
+                            }
                             personList = fileOperations.readFromFile(filePath, operationType);
                             personRecord.sortByName(personList);
                             fileOperations.writeToFile(personList, filePath, operationType);
                             break;
                         case 6:
+                            if (operationChoice == 4 ){
+                                DBManipulation.sortByStateCityZip(connection);
+                                break;
+                            }
                             personList = fileOperations.readFromFile(filePath, operationType);
                             personRecord.sortByCityStateZip(personList);
                             fileOperations.writeToFile(personList, filePath, operationType);
                             break;
                         case 7:
+                            if (operationChoice == 4 ){
+                                DBManipulation.viewByCityAndState(connection);
+                                break;
+                            }
                             personList = fileOperations.readFromFile(filePath, operationType);
                             personRecord.viewPersonCityState(personList);
                             fileOperations.writeToFile(personList, filePath, operationType);
                             break;
                         case 8:
+                            if (operationChoice == 4 ){
+                                DBManipulation.viewByCityORState(connection);
+                                break;
+                            }
                             personList = fileOperations.readFromFile(filePath, operationType);
                             personRecord.cityOrState(personList);
                             fileOperations.writeToFile(personList, filePath, operationType);
@@ -144,7 +139,6 @@ public class AddressBook {
                             break;
                     }
                 }
-            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

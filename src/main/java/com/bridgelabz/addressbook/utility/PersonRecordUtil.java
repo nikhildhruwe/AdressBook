@@ -7,18 +7,15 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class PersonRecordUtil {
+    UserInputValidation user = new UserInputValidation();
     public PersonDetails addPerson(List<PersonDetails> personList) {
         String firstName;
         String lastName;
         Scanner scan = new Scanner(System.in);
         while (true) {
             System.out.println("\nAdd Person Details :");
-
-            System.out.print("\nEnter first name: ");
-            firstName = scan.nextLine();
-
-            System.out.print("Enter last name: ");
-            lastName = scan.nextLine();
+            firstName = user.getFirstName();
+            lastName = user.getFirstName();
             String finalFirstName = firstName;
             String finalLastName = lastName;
             boolean status = personList.stream().anyMatch(personName -> (personName.getFirstName() + " "
@@ -27,20 +24,12 @@ public class PersonRecordUtil {
                 break;
             System.out.println("Already available, please enter another name.");
         }
-        System.out.print("Enter Address: ");
-        String address = scan.nextLine();
-
-        System.out.print("Enter City: ");
-        String city = scan.nextLine();
-
-        System.out.print("Enter State: ");
-        String state = scan.nextLine();
-
+        String address = user.getAddress();
+        String city = user.getCity();
+        String state = user.getState();
         System.out.print("Enter Zip: ");
         int zip = scan.nextInt();
-
-        System.out.print("Enter Phone Number: ");
-        String phone = scan.next();
+        String phone = user.getPhoneNumber();
         return new PersonDetails(firstName, lastName, address, city, state, zip, phone);
     }
 

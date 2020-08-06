@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class DBManipulation {
+    UserInputValidation user = new UserInputValidation();
     public void addPerson(Connection con) throws SQLException {
         Scanner scan = new Scanner(System.in);
         final String INSERT_PERSON_QUERRY = "INSERT INTO person (first_name, last_name, address, city, state, zip, phone)" +
@@ -14,26 +15,14 @@ public class DBManipulation {
         PreparedStatement statement = con.prepareStatement(INSERT_PERSON_QUERRY);
         System.out.println("\nAdd Person Details :");
 
-        System.out.print("\nEnter first name: ");
-        String firstName = scan.nextLine();
-
-        System.out.print("Enter last name: ");
-        String lastName = scan.nextLine();
-
-        System.out.print("Enter Address: ");
-        String address = scan.nextLine();
-
-        System.out.print("Enter City: ");
-        String city = scan.nextLine();
-
-        System.out.print("Enter State: ");
-        String state = scan.nextLine();
-
+        String firstName = user.getFirstName();
+        String lastName = user.getFirstName();
+        String address = user.getAddress();
+        String city = user.getCity();
+        String state = user.getState();
         System.out.print("Enter Zip: ");
         int zip = scan.nextInt();
-
-        System.out.print("Enter Phone Number: ");
-        String phone = scan.next();
+        String phone = user.getPhoneNumber();
 
         statement.setString(1, firstName);
         statement.setString(2, lastName);
