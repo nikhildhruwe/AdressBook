@@ -7,9 +7,10 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class DBManipulation {
+    Scanner scan = new Scanner(System.in);
     UserInputValidation user = new UserInputValidation();
     public void addPerson(Connection con) throws SQLException {
-        Scanner scan = new Scanner(System.in);
+
         final String INSERT_PERSON_QUERRY = "INSERT INTO person (first_name, last_name, address, city, state, zip, phone)" +
                 " VALUES (?,?,?,?,?,?,?)";
         PreparedStatement statement = con.prepareStatement(INSERT_PERSON_QUERRY);
@@ -37,11 +38,8 @@ public class DBManipulation {
     }
 
     public void deletePerson(Connection con) {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter your First name");
-        String firstName = scan.next();
-        System.out.println("Enter your Last name");
-        String lastName = scan.next();
+        String firstName = user.getFirstName();
+        String lastName = user.getFirstName();
         String DELETE_PERSON_QUERRY = "DELETE FROM person WHERE " +
                 "first_name = '" + firstName + "' AND last_name = '" + lastName + "'";
 
@@ -85,7 +83,6 @@ public class DBManipulation {
 
     public void edit(Connection connection) {
         String fieldName = null;
-        Scanner scan = new Scanner(System.in);
         System.out.println("Enter your First name");
         String firstName = scan.next();
         System.out.println("Enter your Last name");
@@ -147,42 +144,39 @@ public class DBManipulation {
     }
 
     public void sortByStateCityZip(Connection connection) {
-        String query = null;
-        Scanner scan = new Scanner(System.in);
+        String query;
+        int field = 0;
         System.out.println("choose:\n1:City\n2:State\n3:Zip");
         int userChoice = scan.nextInt();
         switch (userChoice) {
             case 1:
-                query = "SELECT * FROM person ORDER BY city ASC";
+                field = 5;
                 break;
             case 2:
-                query = "SELECT * FROM person ORDER BY state ASC";
+                field = 6;
                 break;
             case 3:
-                query = "SELECT * FROM person ORDER BY zip ASC";
+                field = 7;
                 break;
             default:
-                System.out.println("Invalid Input");
+                System.out.println("Invalid choice");
                 break;
         }
+        query = "SELECT * FROM person ORDER BY '"+field+"' ASC";
         this.displayDBDetails(query, connection);
     }
 
     public void viewByCityAndState(Connection connection) {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Enter City: ");
-        String city = scan.nextLine();
-        System.out.print("Enter State: ");
-        String state = scan.nextLine();
+        String city = user.getCity();
+        String state = user.getState();
         String query = "SELECT * FROM person WHERE city = '" + city + "' AND state = '" + state + "'";
         this.displayDBDetails(query, connection);
     }
 
     public void viewByCityORState(Connection connection) {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Enter City or State: ");
-        String place = scan.nextLine();
-        String query = "SELECT * FROM person WHERE city = '" + place + "' OR state = '" + place + "'";
+        String city = user.getCity();
+        String state = user.getState();
+        String query = "SELECT * FROM person WHERE city = '" + city + "' OR state = '" + state + "'";
         this.displayDBDetails(query, connection);
     }
 }
