@@ -1,14 +1,14 @@
-package com.bridgelabz.addressbook.services;
+package com.bridgelabz.addressbook.utility;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-    public final static String DB_DRIVER_CLASS = "com.mysql.jdbc.Driver";
-    public final static String DB_URL = "jdbc:mysql://localhost:3306/addressbookdetails";
-    public final static String DB_USERNAME = "root";
-    public final static String DB_PASSWORD = "coolboy996";
+    private final static String DB_DRIVER_CLASS = "com.mysql.jdbc.Driver";
+    private final static String DB_URL = "jdbc:mysql://localhost:3306/addressbookdetails?autoReconnect=true&useSSL=false";
+    private final static String DB_USERNAME = "root";
+    private final static String DB_PASSWORD = "coolboy996";
 
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
         Connection connection = null;

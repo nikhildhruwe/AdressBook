@@ -1,7 +1,6 @@
 package com.bridgelabz.addressbook.services;
 
 import com.bridgelabz.addressbook.model.PersonDetails;
-
 import java.util.List;
 
 public interface IAddressBook {
@@ -13,5 +12,4 @@ public interface IAddressBook {
     void viewPersonCityState(List<PersonDetails> personList);
     void cityOrState(List<PersonDetails> personList);
     void print(List<PersonDetails> personList);
-
 }

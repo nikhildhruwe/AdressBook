@@ -9,13 +9,12 @@ import java.util.Scanner;
 public class DBManipulation {
     Scanner scan = new Scanner(System.in);
     UserInputValidation user = new UserInputValidation();
-    public void addPerson(Connection con) throws SQLException {
 
-        final String INSERT_PERSON_QUERRY = "INSERT INTO person (first_name, last_name, address, city, state, zip, phone)" +
+    public void addPerson(Connection con) {
+
+        final String INSERT_PERSON_QUERY = "INSERT INTO person (first_name, last_name, address, city, state, zip, phone)" +
                 " VALUES (?,?,?,?,?,?,?)";
-        PreparedStatement statement = con.prepareStatement(INSERT_PERSON_QUERRY);
         System.out.println("\nAdd Person Details :");
-
         String firstName = user.getFirstName();
         String lastName = user.getFirstName();
         String address = user.getAddress();
@@ -24,44 +23,50 @@ public class DBManipulation {
         System.out.print("Enter Zip: ");
         int zip = scan.nextInt();
         String phone = user.getPhoneNumber();
-
-        statement.setString(1, firstName);
-        statement.setString(2, lastName);
-        statement.setString(3, address);
-        statement.setString(4, city);
-        statement.setString(5, state);
-        statement.setInt(6, zip);
-        statement.setString(7, phone);
-        statement.execute();
-        System.out.println("Person details added succesfuly....");
-        statement.close();
-    }
-
-    public void deletePerson(Connection con) {
-        String firstName = user.getFirstName();
-        String lastName = user.getFirstName();
-        String DELETE_PERSON_QUERRY = "DELETE FROM person WHERE " +
-                "first_name = '" + firstName + "' AND last_name = '" + lastName + "'";
-
-        PreparedStatement statement;
         try {
-            statement = con.prepareStatement(DELETE_PERSON_QUERRY);
+            PreparedStatement statement = con.prepareStatement(INSERT_PERSON_QUERY);
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            statement.setString(3, address);
+            statement.setString(4, city);
+            statement.setString(5, state);
+            statement.setInt(6, zip);
+            statement.setString(7, phone);
             statement.execute();
             System.out.println("Person details added succesfuly....");
+            statement.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public void display(Connection connection) throws SQLException {
-        String DISPLAY_PERSON_QUERRY = "SELECT * FROM person";
-        this.displayDBDetails(DISPLAY_PERSON_QUERRY, connection);
-    }
-
-    private void displayDBDetails(String querry, Connection connection) {
+    public void deletePerson(Connection con) {
+        String DELETE_PERSON_QUERY = "DELETE FROM person WHERE " +
+                "first_name = ? AND last_name = ?";
+        String firstName = user.getFirstName();
+        String lastName = user.getFirstName();
         PreparedStatement statement;
         try {
-            statement = connection.prepareStatement(querry);
+            statement = con.prepareStatement(DELETE_PERSON_QUERY);
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            statement.execute();
+            System.out.println("Person details added succesfuly....");
+            statement.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void display(Connection connection) {
+        String DISPLAY_PERSON_QUERY = "SELECT * FROM person";
+        this.displayDBDetails(DISPLAY_PERSON_QUERY, connection);
+    }
+
+    private void displayDBDetails(String query, Connection connection) {
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("person_id");
@@ -76,6 +81,8 @@ public class DBManipulation {
                         address + "  " + "CITY: " + city + "  " + "STATE: " + state +
                         "  " + "ZIPCODE: " + zip + "  " + "PHONE: " + phone);
             }
+            resultSet.close();
+            statement.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -83,11 +90,8 @@ public class DBManipulation {
 
     public void edit(Connection connection) {
         String fieldName = null;
-        System.out.println("Enter your First name");
-        String firstName = scan.next();
-        System.out.println("Enter your Last name");
-        String lastName = scan.next();
-
+        String firstName = user.getFirstName();
+        String lastName = user.getFirstName();
         boolean status = true;
         while (status) {
             System.out.println("Choose the field to update\n1. Address\n2. City\n3. State\n" + "4. Zip\n" +
@@ -119,10 +123,10 @@ public class DBManipulation {
             if (status) {
                 System.out.print("Enter new Value: ");
                 String newValue = scan.next();
-                String UPDATE_PERSON_QUERRY = "UPDATE person SET " + fieldName + " = '" + newValue + "' WHERE first_name" +
+                String UPDATE_PERSON_QUERY = "UPDATE person SET " + fieldName + " = '" + newValue + "' WHERE first_name" +
                         " = '" + firstName + "' AND last_name = '" + lastName + "'";
                 try {
-                    PreparedStatement statement = connection.prepareStatement(UPDATE_PERSON_QUERRY);
+                    PreparedStatement statement = connection.prepareStatement(UPDATE_PERSON_QUERY);
                     statement.execute();
                     statement.close();
                 } catch (SQLException throwables) {
@@ -133,9 +137,9 @@ public class DBManipulation {
     }
 
     public void sortByName(Connection connection) {
-        String SORT_PERSON_NAME_QUERRY = "SELECT * FROM person ORDER BY name ASC";
+        String SORT_PERSON_NAME_QUERY = "SELECT * FROM person ORDER BY name ASC";
         try {
-            PreparedStatement statement = connection.prepareStatement(SORT_PERSON_NAME_QUERRY);
+            PreparedStatement statement = connection.prepareStatement(SORT_PERSON_NAME_QUERY);
             statement.execute();
             statement.close();
         } catch (SQLException throwables) {
@@ -144,39 +148,51 @@ public class DBManipulation {
     }
 
     public void sortByStateCityZip(Connection connection) {
-        String query;
-        int field = 0;
+        String query = null;
         System.out.println("choose:\n1:City\n2:State\n3:Zip");
         int userChoice = scan.nextInt();
         switch (userChoice) {
             case 1:
-                field = 5;
+                query = "SELECT * FROM person ORDER BY city ASC";
                 break;
             case 2:
-                field = 6;
+                query = "SELECT * FROM person ORDER BY state ASC";
                 break;
             case 3:
-                field = 7;
+                query = "SELECT * FROM person ORDER BY zip ASC";
                 break;
             default:
-                System.out.println("Invalid choice");
+                System.out.println("Invalid Input");
                 break;
         }
-        query = "SELECT * FROM person ORDER BY '"+field+"' ASC";
         this.displayDBDetails(query, connection);
     }
 
     public void viewByCityAndState(Connection connection) {
+        String query = "SELECT * FROM person WHERE city = ? AND state = ?";
         String city = user.getCity();
         String state = user.getState();
-        String query = "SELECT * FROM person WHERE city = '" + city + "' AND state = '" + state + "'";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, city);
+            statement.setString(2, state);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         this.displayDBDetails(query, connection);
     }
 
     public void viewByCityORState(Connection connection) {
+        String query = "SELECT * FROM person WHERE city = ? OR state = ?";
         String city = user.getCity();
         String state = user.getState();
-        String query = "SELECT * FROM person WHERE city = '" + city + "' OR state = '" + state + "'";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, city);
+            statement.setString(2, state);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         this.displayDBDetails(query, connection);
     }
 }

@@ -1,7 +1,7 @@
 package com.bridgelabz.addressbook.controller;
 
 import com.bridgelabz.addressbook.model.PersonDetails;
-import com.bridgelabz.addressbook.services.DBConnection;
+import com.bridgelabz.addressbook.utility.DBConnection;
 import com.bridgelabz.addressbook.utility.DBManipulation;
 import com.bridgelabz.addressbook.utility.FileOperations;
 import com.bridgelabz.addressbook.services.PersonRecord;
@@ -132,9 +132,13 @@ public class AddressBook {
                             fileOperations.writeToFile(personList, filePath, operationType);
                             break;
                         case 9:
+                            if (operationChoice == 4 ){
+                                connection.close();
+                            }
                             status = false;
                             break;
                         default:
+
                             System.out.println("Invalid choice");
                             break;
                     }
