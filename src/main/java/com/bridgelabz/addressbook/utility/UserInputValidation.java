@@ -22,7 +22,7 @@ public class UserInputValidation {
     public String getFirstName() {
         String firstName;
         do {
-            System.out.println("Enter your First Name");
+            System.out.println("Enter your First Name :");
             firstName = scan.next();
         } while (!validateInput(firstName, NAME_PATTERN));
         return firstName;
@@ -31,7 +31,7 @@ public class UserInputValidation {
     public String getLastName() {
         String lastName;
         do {
-            System.out.println("Enter your First Name");
+            System.out.println("Enter your Last Name :");
             lastName = scan.next();
         } while (!validateInput(lastName, NAME_PATTERN));
         return lastName;
@@ -40,7 +40,7 @@ public class UserInputValidation {
     public String getAddress() {
         String address;
         do {
-            System.out.println("Enter your Address");
+            System.out.println("Enter your Address :");
             address = scan.next();
         } while (!validateInput(address, ADDRESS_PATTERN));
         return address;
@@ -49,7 +49,7 @@ public class UserInputValidation {
     public String getCity() {
         String city;
         do {
-            System.out.println("Enter your City");
+            System.out.println("Enter your City :");
             city = scan.next();
         } while (!validateInput(city, NAME_PATTERN));
         return city;
@@ -58,25 +58,25 @@ public class UserInputValidation {
     public String getState() {
         String state;
         do {
-            System.out.println("Enter your State");
-            state = scan.next();
+            System.out.println("Enter your State :");
+            state = scan.nextLine();
         } while (!validateInput(state, NAME_PATTERN));
         return state;
     }
 
-    public String getZipCode() {
+    public int getZipCode() {
         String zip;
         do {
-            System.out.println("Enter your Zip code");
+            System.out.println("Enter your Zip code :");
             zip = scan.next();
         } while (!validateInput(zip, ZIP_PATTERN));
-        return zip;
+        return Integer.parseInt(zip);
     }
 
     public String getPhoneNumber() {
         String phoneNumber;
         do {
-            System.out.println("Enter your Phone Number");
+            System.out.println("Enter your Phone Number :");
             phoneNumber = scan.next();
         } while (!validateInput(phoneNumber, PHONE_PATTERN));
         return phoneNumber;

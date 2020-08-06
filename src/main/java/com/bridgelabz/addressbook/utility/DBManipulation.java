@@ -11,17 +11,15 @@ public class DBManipulation {
     UserInputValidation user = new UserInputValidation();
 
     public void addPerson(Connection con) {
-
         final String INSERT_PERSON_QUERY = "INSERT INTO person (first_name, last_name, address, city, state, zip, phone)" +
                 " VALUES (?,?,?,?,?,?,?)";
         System.out.println("\nAdd Person Details :");
         String firstName = user.getFirstName();
-        String lastName = user.getFirstName();
+        String lastName = user.getLastName();
         String address = user.getAddress();
         String city = user.getCity();
         String state = user.getState();
-        System.out.print("Enter Zip: ");
-        int zip = scan.nextInt();
+        int zip = user.getZipCode();
         String phone = user.getPhoneNumber();
         try {
             PreparedStatement statement = con.prepareStatement(INSERT_PERSON_QUERY);
@@ -44,7 +42,7 @@ public class DBManipulation {
         String DELETE_PERSON_QUERY = "DELETE FROM person WHERE " +
                 "first_name = ? AND last_name = ?";
         String firstName = user.getFirstName();
-        String lastName = user.getFirstName();
+        String lastName = user.getLastName();
         PreparedStatement statement;
         try {
             statement = con.prepareStatement(DELETE_PERSON_QUERY);
@@ -90,9 +88,30 @@ public class DBManipulation {
 
     public void edit(Connection connection) {
         String fieldName = null;
+        PreparedStatement statement ;
+        String newValue = null;
+        boolean status = false;
+        String query = "SELECT * FROM person";
         String firstName = user.getFirstName();
-        String lastName = user.getFirstName();
-        boolean status = true;
+        String lastName = user.getLastName();
+        try {
+            statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String DBFirstName = resultSet.getString("first_name");
+                String DBlastName = resultSet.getString("last_name");
+                if (firstName.equals(DBFirstName) && lastName.equals(DBlastName)){
+                    status = true;
+                    break;
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        if(!status){
+            System.out.println("No such record found...");
+            return;
+        }
         while (status) {
             System.out.println("Choose the field to update\n1. Address\n2. City\n3. State\n" + "4. Zip\n" +
                     "5. Phone number\n6. Save.");
@@ -100,18 +119,23 @@ public class DBManipulation {
             switch (choice) {
                 case 1:
                     fieldName = "address";
+                    newValue = user.getAddress();
                     break;
                 case 2:
                     fieldName = "city";
+                    newValue= user.getCity();
                     break;
                 case 3:
                     fieldName = "state";
+                    newValue = user.getState();
                     break;
                 case 4:
                     fieldName = "zip";
+                    newValue = String.valueOf(user.getZipCode());
                     break;
                 case 5:
                     fieldName = "phone";
+                    newValue = user.getPhoneNumber();
                     break;
                 case 6:
                     System.out.println("Saved.");
@@ -121,12 +145,10 @@ public class DBManipulation {
                     System.out.println("Invalid input.");
             }
             if (status) {
-                System.out.print("Enter new Value: ");
-                String newValue = scan.next();
                 String UPDATE_PERSON_QUERY = "UPDATE person SET " + fieldName + " = '" + newValue + "' WHERE first_name" +
                         " = '" + firstName + "' AND last_name = '" + lastName + "'";
                 try {
-                    PreparedStatement statement = connection.prepareStatement(UPDATE_PERSON_QUERY);
+                    statement = connection.prepareStatement(UPDATE_PERSON_QUERY);
                     statement.execute();
                     statement.close();
                 } catch (SQLException throwables) {

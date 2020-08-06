@@ -8,14 +8,15 @@ import java.util.stream.Collectors;
 
 public class PersonRecordUtil {
     UserInputValidation user = new UserInputValidation();
+    Scanner scan = new Scanner(System.in);
+
     public PersonDetails addPerson(List<PersonDetails> personList) {
         String firstName;
         String lastName;
-        Scanner scan = new Scanner(System.in);
         while (true) {
             System.out.println("\nAdd Person Details :");
             firstName = user.getFirstName();
-            lastName = user.getFirstName();
+            lastName = user.getLastName();
             String finalFirstName = firstName;
             String finalLastName = lastName;
             boolean status = personList.stream().anyMatch(personName -> (personName.getFirstName() + " "
@@ -27,19 +28,14 @@ public class PersonRecordUtil {
         String address = user.getAddress();
         String city = user.getCity();
         String state = user.getState();
-        System.out.print("Enter Zip: ");
-        int zip = scan.nextInt();
+        int zip = user.getZipCode();
         String phone = user.getPhoneNumber();
         return new PersonDetails(firstName, lastName, address, city, state, zip, phone);
     }
 
     public PersonDetails deletePerson(List<PersonDetails> personList) {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter your First name");
-        String firstName = scan.next();
-        System.out.println("Enter your Last name");
-        String lastName = scan.next();
-
+        String firstName = user.getFirstName();
+        String lastName = user.getLastName();
         return personList.stream().filter(name -> (name.getFirstName() + " "
                 + name.getLastName()).equalsIgnoreCase(firstName
                 + " " + lastName)).findAny().orElse(null);
@@ -47,12 +43,8 @@ public class PersonRecordUtil {
 
     public void editPerson(List<PersonDetails> personList) {
         try {
-            Scanner scan = new Scanner(System.in);
-            System.out.println("Enter your First name");
-            String firstName = scan.next();
-            System.out.println("Enter your Last name");
-            String lastName = scan.next();
-
+            String firstName = user.getFirstName();
+            String lastName = user.getLastName();
             PersonDetails personDetails = personList.stream().filter(name -> (name.getFirstName() + " "
                     + name.getLastName()).equalsIgnoreCase(firstName
                     + " " + lastName)).findAny().orElse(null);
@@ -64,28 +56,23 @@ public class PersonRecordUtil {
                     int choice = scan.nextInt();
                     switch (choice) {
                         case 1:
-                            System.out.print("Enter new Address: ");
-                            String address = scan.next();
+                            String address = user.getAddress();
                             personDetails.setAddress(address);
                             break;
                         case 2:
-                            System.out.print("Enter new City: ");
-                            String city = scan.next();
+                            String city = user.getCity();
                             personDetails.setCity(city);
                             break;
                         case 3:
-                            System.out.print("Enter new State: ");
-                            String state = scan.next();
+                            String state = user.getState();
                             personDetails.setState(state);
                             break;
                         case 4:
-                            System.out.print("Enter new Zip: ");
-                            int zip = scan.nextInt();
+                            int zip = user.getZipCode();
                             personDetails.setZip(zip);
                             break;
                         case 5:
-                            System.out.print("Enter new Phone Number: ");
-                            String phone = scan.next();
+                            String phone = user.getPhoneNumber();
                             personDetails.setPhone(phone);
                             break;
                         case 6:
@@ -109,11 +96,8 @@ public class PersonRecordUtil {
     }
 
     public void viewPersonCityState(List<PersonDetails> personList) {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter State");
-        String state = scan.nextLine();
-        System.out.println("Enter City");
-        String city = scan.nextLine();
+        String state = user.getState();
+        String city = user.getCity();
         List<PersonDetails> collect = personList.stream().
                 filter(name -> (name.getState().equals(state) && name.getCity().equals(city))).
                 collect(Collectors.toList());
@@ -124,12 +108,8 @@ public class PersonRecordUtil {
     }
 
     public void viewByCityOrState(List<PersonDetails> personList) {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter State");
-        String state = scan.nextLine();
-        System.out.println("Enter City");
-        String city = scan.nextLine();
-
+        String state = user.getState();
+        String city = user.getCity();
         List<PersonDetails> collectState = personList.stream().filter(name -> (name.getState().equals(state))).
                 collect(Collectors.toList());
         collectState.forEach(personState -> System.out.println("Person: " + personState.getFirstName() +
